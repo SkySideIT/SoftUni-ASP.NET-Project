@@ -39,6 +39,7 @@ namespace SoftUni_ASP.NET_Project
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
