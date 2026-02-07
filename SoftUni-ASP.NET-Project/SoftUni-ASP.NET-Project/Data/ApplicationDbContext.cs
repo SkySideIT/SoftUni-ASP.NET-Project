@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SoftUni_ASP.NET_Project.Models;
 
 namespace SoftUni_ASP.NET_Project.Data
 {
@@ -11,9 +12,16 @@ namespace SoftUni_ASP.NET_Project.Data
 
         }
 
+        public virtual DbSet<Game> Games { get; set; } = null!;
+        public virtual DbSet<Genre> Genres { get; set; } = null!;
+        public virtual DbSet<Platform> Platforms { get; set; } = null!;
+        public virtual DbSet<Publisher> Publishers { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }
 }
