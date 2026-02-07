@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using SoftUni_ASP.NET_Project.Models;
+using SoftUni_ASP.NET_Project.ViewModels;
 
 namespace SoftUni_ASP.NET_Project.Controllers
 {

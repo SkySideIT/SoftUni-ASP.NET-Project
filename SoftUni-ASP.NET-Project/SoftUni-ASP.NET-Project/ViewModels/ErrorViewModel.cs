@@ -1,4 +1,4 @@
-namespace SoftUni_ASP.NET_Project.Models
+namespace SoftUni_ASP.NET_Project.ViewModels
 {
     public class ErrorViewModel
     {
