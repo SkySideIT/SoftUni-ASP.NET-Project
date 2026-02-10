@@ -278,7 +278,7 @@ namespace TechWorld.Web.Data.Migrations
                             Id = new Guid("b391bec7-115f-40c6-866c-68b52eaaa777"),
                             Description = "Action RPG developed by FromSoftware and published by Bandai Namco.",
                             GenreId = 1,
-                            ImageUrl = "https://example.com/images/elden-ring.jpg",
+                            ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg",
                             PlatformId = 1,
                             Price = 119.99m,
                             PublisherId = 1,
@@ -290,7 +290,7 @@ namespace TechWorld.Web.Data.Migrations
                             Id = new Guid("bc3b946e-e9ef-4822-86e9-90fa6309c1a4"),
                             Description = "Open world fantasy RPG developed by CD Projekt Red.",
                             GenreId = 1,
-                            ImageUrl = "https://example.com/images/witcher3.jpg",
+                            ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg",
                             PlatformId = 1,
                             Price = 89.99m,
                             PublisherId = 2,
@@ -302,12 +302,48 @@ namespace TechWorld.Web.Data.Migrations
                             Id = new Guid("6f7eb41a-9f63-44a3-8d66-7065b7e1b27e"),
                             Description = "Team-based shooter developed and published by Blizzard Entertainment.",
                             GenreId = 2,
-                            ImageUrl = "https://example.com/images/overwatch2.jpg",
+                            ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/2357570/header.jpg",
                             PlatformId = 2,
                             Price = 0.00m,
                             PublisherId = 3,
                             ReleaseDate = new DateOnly(2022, 10, 4),
                             Title = "Overwatch 2"
+                        },
+                        new
+                        {
+                            Id = new Guid("b7036922-99a0-471e-86f8-fbc0bea7061b"),
+                            Description = "Futuristic open-world RPG developed by CD Projekt Red.",
+                            GenreId = 3,
+                            ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg",
+                            PlatformId = 1,
+                            Price = 99.99m,
+                            PublisherId = 2,
+                            ReleaseDate = new DateOnly(2020, 12, 10),
+                            Title = "Cyberpunk 2077"
+                        },
+                        new
+                        {
+                            Id = new Guid("007641f1-5b91-4cc4-8113-82a87e42a2f7"),
+                            Description = "Action RPG developed and published by Blizzard Entertainment.",
+                            GenreId = 3,
+                            ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/2344520/header.jpg",
+                            PlatformId = 2,
+                            Price = 69.99m,
+                            PublisherId = 3,
+                            ReleaseDate = new DateOnly(2023, 6, 6),
+                            Title = "Diablo IV"
+                        },
+                        new
+                        {
+                            Id = new Guid("91d9d4ea-cdb0-44b9-8b3a-7d81a3c41ea1"),
+                            Description = "Fighting game developed and published by Bandai Namco.",
+                            GenreId = 1,
+                            ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/1778820/header.jpg",
+                            PlatformId = 3,
+                            Price = 59.99m,
+                            PublisherId = 1,
+                            ReleaseDate = new DateOnly(2024, 1, 26),
+                            Title = "Tekken 8"
                         });
                 });
 

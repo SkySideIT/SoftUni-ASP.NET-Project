@@ -131,9 +131,12 @@ namespace TechWorld.Web.Data.Migrations
                 columns: new[] { "Id", "Description", "GenreId", "ImageUrl", "PlatformId", "Price", "PublisherId", "ReleaseDate", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("6f7eb41a-9f63-44a3-8d66-7065b7e1b27e"), "Team-based shooter developed and published by Blizzard Entertainment.", 2, "https://example.com/images/overwatch2.jpg", 2, 0.00m, 3, new DateOnly(2022, 10, 4), "Overwatch 2" },
-                    { new Guid("b391bec7-115f-40c6-866c-68b52eaaa777"), "Action RPG developed by FromSoftware and published by Bandai Namco.", 1, "https://example.com/images/elden-ring.jpg", 1, 119.99m, 1, new DateOnly(2022, 2, 25), "Elden Ring" },
-                    { new Guid("bc3b946e-e9ef-4822-86e9-90fa6309c1a4"), "Open world fantasy RPG developed by CD Projekt Red.", 1, "https://example.com/images/witcher3.jpg", 1, 89.99m, 2, new DateOnly(2015, 5, 19), "The Witcher 3: Wild Hunt" }
+                    { new Guid("6f7eb41a-9f63-44a3-8d66-7065b7e1b27e"), "Team-based shooter developed and published by Blizzard Entertainment.", 2, "https://cdn.cloudflare.steamstatic.com/steam/apps/2357570/header.jpg", 2, 0.00m, 3, new DateOnly(2022, 10, 4), "Overwatch 2" },
+                    { new Guid("b391bec7-115f-40c6-866c-68b52eaaa777"), "Action RPG developed by FromSoftware and published by Bandai Namco.", 1, "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", 1, 119.99m, 1, new DateOnly(2022, 2, 25), "Elden Ring" },
+                    { new Guid("bc3b946e-e9ef-4822-86e9-90fa6309c1a4"), "Open world fantasy RPG developed by CD Projekt Red.", 1, "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg", 1, 89.99m, 2, new DateOnly(2015, 5, 19), "The Witcher 3: Wild Hunt" },
+                    { new Guid("b7036922-99a0-471e-86f8-fbc0bea7061b"), "Futuristic open-world RPG developed by CD Projekt Red.", 3, "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", 1, 99.99m, 2, new DateOnly(2020, 12, 10), "Cyberpunk 2077" },
+                    { new Guid("007641f1-5b91-4cc4-8113-82a87e42a2f7"), "Action RPG developed and published by Blizzard Entertainment.", 3, "https://cdn.cloudflare.steamstatic.com/steam/apps/2344520/header.jpg", 2, 69.99m, 3, new DateOnly(2023, 6, 6), "Diablo IV" },
+                    { new Guid("91d9d4ea-cdb0-44b9-8b3a-7d81a3c41ea1"), "Fighting game developed and published by Bandai Namco.", 1, "https://cdn.cloudflare.steamstatic.com/steam/apps/1778820/header.jpg", 3, 59.99m, 1, new DateOnly(2024, 1, 26), "Tekken 8" }
                 });
 
             migrationBuilder.CreateIndex(
