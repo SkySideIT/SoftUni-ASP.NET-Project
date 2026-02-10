@@ -2,31 +2,48 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center mt-5">
-    <h1 class="display-4">Welcome to TechWorld!</h1>
-    <p class="lead">Find your favourite games, look by genres, platforms and publishers</p>
-    <a class="btn btn-primary btn-lg" href="/Games">All games in one place</a>
-</div>
+<section class="text-center text-white py-5" style="background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);">
+    <div class="container py-5">
+        <h1 class="display-3 fw-bold mb-3">Welcome to <span class="text-warning">TechWorld</span></h1>
+        <p class="lead mb-4">Discover your next favorite video game — explore genres, platforms, and publishers!</p>
+        <a href="/Games" class="btn btn-light btn-lg me-2 shadow-sm">Browse Games</a>
+    </div>
+</section>
 
-<hr class="my-5" />
+<section class="container py-5">
+    <h2 class="text-center mb-5 fw-semibold">🔥 Featured Games</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 hover-shadow">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg" class="card-img-top" alt="Elden Ring">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Elden Ring</h5>
+                    <p class="card-text text-muted">An epic action RPG from FromSoftware. Explore vast lands and challenge powerful foes.</p>
+                    <a href="/Games/Details" class="btn btn-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-md-4 text-center mb-4">
-        <i class="bi bi-list-task" style="font-size: 3rem;"></i>
-        <h3 class="mt-3">Genres</h3>
-        <p>Sort the games by the genre and find out new favourite releases.</p>
-        <a href="/Genres" class="btn btn-outline-primary btn-sm">Genres</a>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg" class="card-img-top" alt="The Witcher 3">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">The Witcher 3: Wild Hunt</h5>
+                    <p class="card-text text-muted">A story-driven open world RPG full of monsters, magic, and meaningful choices.</p>
+                    <a href="/Games/Details" class="btn btn-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2357570/header.jpg" class="card-img-top" alt="Overwatch 2">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Overwatch 2</h5>
+                    <p class="card-text text-muted">Team-based multiplayer action with unique heroes and fast-paced gameplay.</p>
+                    <a href="/Games/Details" class="btn btn-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4 text-center mb-4">
-        <i class="bi bi-pc-display" style="font-size: 3rem;"></i>
-        <h3 class="mt-3">Platforms</h3>
-        <p>Sort the games by the platform, which you want to play on.</p>
-        <a href="/Platforms" class="btn btn-outline-primary btn-sm">Platforms</a>
-    </div>
-    <div class="col-md-4 text-center mb-4">
-        <i class="bi bi-controller" style="font-size: 3rem;"></i>
-        <h3 class="mt-3">Publishers</h3>
-        <p>Sort the games by the publisher you like.</p>
-        <a href="/Publishers" class="btn btn-outline-primary btn-sm">Publishers</a>
-    </div>
-</div>
+</section>
