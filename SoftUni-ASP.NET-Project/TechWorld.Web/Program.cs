@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TechWorld.Data;
+using TechWorld.Data.Common.Interfaces;
+using TechWorld.Data.Common;
+using TechWorld.Services.Core.Interfaces;
+using TechWorld.Services.Core;
 
 namespace TechWorld.Web
 {
@@ -19,6 +23,9 @@ namespace TechWorld.Web
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IGameService, GameService>();
 
             var app = builder.Build();
 

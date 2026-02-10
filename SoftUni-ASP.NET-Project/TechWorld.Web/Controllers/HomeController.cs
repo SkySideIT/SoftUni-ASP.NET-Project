@@ -1,29 +1,33 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TechWorld.Data;
+using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
 
 namespace TechWorld.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IGameService _gameService;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext)
+        public HomeController(IGameService gameService)
         {
-            _logger = logger;
-            _dbContext = dbContext;
+            _gameService = gameService;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            var latestGames = _gameService.GetLatestGamesAsync(3)
+                .Result
+                .Select(g => new Latest3GamesCardViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    Description = g.Description,
+                    ImageUrl = g.ImageUrl!
+                });
+            
+            return View(latestGames);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

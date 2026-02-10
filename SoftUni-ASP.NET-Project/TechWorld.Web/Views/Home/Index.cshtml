@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<TechWorld.Web.ViewModels.Latest3GamesCardViewModel>
+
+@{
     ViewData["Title"] = "Home";
 }
 
@@ -11,39 +13,23 @@
 </section>
 
 <section class="container py-5">
-    <h2 class="text-center mb-5 fw-semibold">🔥 Featured Games</h2>
+    <h2 class="text-center mb-5 fw-semibold">🔥 Latest Games</h2>
     <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 hover-shadow">
-                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg" class="card-img-top" alt="Elden Ring">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Elden Ring</h5>
-                    <p class="card-text text-muted">An epic action RPG from FromSoftware. Explore vast lands and challenge powerful foes.</p>
-                    <a href="/Games/Details" class="btn btn-primary btn-sm">View Details</a>
+        @foreach (var game in Model)
+        {
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="@game.ImageUrl" class="card-img-top" alt="@game.Title">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">@game.Title</h5>
+                        <p class="card-text text-muted">
+                            @(game.Description.Length > 90 ? game.Description.Substring(0, 90) + "..." : game.Description)
+                        </p>
+                        <a asp-controller="Games" asp-action="Details" asp-route-id="@game.Id"
+                           class="btn btn-primary btn-sm">View Details</a>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0">
-                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg" class="card-img-top" alt="The Witcher 3">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">The Witcher 3: Wild Hunt</h5>
-                    <p class="card-text text-muted">A story-driven open world RPG full of monsters, magic, and meaningful choices.</p>
-                    <a href="/Games/Details" class="btn btn-primary btn-sm">View Details</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0">
-                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2357570/header.jpg" class="card-img-top" alt="Overwatch 2">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Overwatch 2</h5>
-                    <p class="card-text text-muted">Team-based multiplayer action with unique heroes and fast-paced gameplay.</p>
-                    <a href="/Games/Details" class="btn btn-primary btn-sm">View Details</a>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </section>

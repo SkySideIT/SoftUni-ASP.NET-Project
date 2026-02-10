@@ -15,7 +15,7 @@ namespace TechWorld.Data.Configurations
                  Description = "Action RPG developed by FromSoftware and published by Bandai Namco.",
                  Price = 119.99m,
                  ReleaseDate = DateOnly.FromDateTime(new DateTime(2022, 2, 25)),
-                 ImageUrl = "https://example.com/images/elden-ring.jpg",
+                 ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg",
                  GenreId = 1,
                  PlatformId = 1,
                  PublisherId = 1
@@ -27,7 +27,7 @@ namespace TechWorld.Data.Configurations
                  Description = "Open world fantasy RPG developed by CD Projekt Red.",
                  Price = 89.99m,
                  ReleaseDate = DateOnly.FromDateTime(new DateTime(2015, 5, 19)),
-                 ImageUrl = "https://example.com/images/witcher3.jpg",
+                 ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg",
                  GenreId = 1,
                  PlatformId = 1,
                  PublisherId = 2
@@ -39,7 +39,7 @@ namespace TechWorld.Data.Configurations
                  Description = "Team-based shooter developed and published by Blizzard Entertainment.",
                  Price = 0.00m,
                  ReleaseDate = DateOnly.FromDateTime(new DateTime(2022, 10, 4)),
-                 ImageUrl = "https://example.com/images/overwatch2.jpg",
+                 ImageUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/2357570/header.jpg",
                  GenreId = 2,
                  PlatformId = 2,
                  PublisherId = 3
