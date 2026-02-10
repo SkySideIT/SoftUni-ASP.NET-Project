@@ -18,8 +18,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TechWorld.Data.Models\TechWorld.Data.Models.csproj" />
-    <ProjectReference Include="..\TechWorld.Data\TechWorld.Data.csproj" />
     <ProjectReference Include="..\TechWorld.GCommon\TechWorld.GCommon.csproj" />
+    <ProjectReference Include="..\TechWorld.Services.Core\TechWorld.Services.Core.csproj" />
     <ProjectReference Include="..\TechWorld.Web.ViewModels\TechWorld.Web.ViewModels.csproj" />
   </ItemGroup>
 

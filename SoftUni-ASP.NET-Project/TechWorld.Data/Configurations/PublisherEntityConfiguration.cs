@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TechWorld.Data.Models;
 
-namespace TechWorld.Web.Data.Configurations
+namespace TechWorld.Data.Configurations
 {
     public class PublisherEntityConfiguration : IEntityTypeConfiguration<Publisher>
     {

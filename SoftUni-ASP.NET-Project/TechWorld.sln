@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechWorld.Data.Models", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechWorld.Data", "TechWorld.Data\TechWorld.Data.csproj", "{3C6A77F0-9647-4346-BA6A-8752442589F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechWorld.Services.Core", "TechWorld.Services.Core\TechWorld.Services.Core.csproj", "{FBBA58D1-34A0-439E-BD5F-7CA637C57F8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3C6A77F0-9647-4346-BA6A-8752442589F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C6A77F0-9647-4346-BA6A-8752442589F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C6A77F0-9647-4346-BA6A-8752442589F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBBA58D1-34A0-439E-BD5F-7CA637C57F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBBA58D1-34A0-439E-BD5F-7CA637C57F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBBA58D1-34A0-439E-BD5F-7CA637C57F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBBA58D1-34A0-439E-BD5F-7CA637C57F8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

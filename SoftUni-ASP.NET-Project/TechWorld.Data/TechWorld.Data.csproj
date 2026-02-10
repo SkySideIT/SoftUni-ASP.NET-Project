@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TechWorld.Data.Models\TechWorld.Data.Models.csproj" />
+    <ProjectReference Include="..\TechWorld.GCommon\TechWorld.GCommon.csproj" />
   </ItemGroup>
 
 </Project>
