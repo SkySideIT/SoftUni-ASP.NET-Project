@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static SoftUni_ASP.NET_Project.Common.EntityValidations;
+using static TechWorld.GCommon.EntityValidations;
 
-namespace SoftUni_ASP.NET_Project.Models
+namespace TechWorld.Data.Models
 {
     public class Platform
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SoftUni_ASP.NET_Project.Models;
+using TechWorld.Data.Models;
 
-namespace SoftUni_ASP.NET_Project.Data
+namespace TechWorld.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

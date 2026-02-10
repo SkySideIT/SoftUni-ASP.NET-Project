@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SoftUni_ASP.NET_Project.Data.Migrations
+namespace TechWorld.Web.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

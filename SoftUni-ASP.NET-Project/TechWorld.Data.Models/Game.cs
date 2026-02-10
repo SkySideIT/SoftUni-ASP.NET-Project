@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using static SoftUni_ASP.NET_Project.Common.EntityValidations;
-using static SoftUni_ASP.NET_Project.Common.ApplicationConstants;
+using static TechWorld.GCommon.EntityValidations;
+using static TechWorld.GCommon.ApplicationConstants;
 
-namespace SoftUni_ASP.NET_Project.Models
+namespace TechWorld.Data.Models
 {
     public class Game
     {

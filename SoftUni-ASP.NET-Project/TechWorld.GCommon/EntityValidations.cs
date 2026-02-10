@@ -1,4 +1,4 @@
-﻿namespace SoftUni_ASP.NET_Project.Common
+﻿namespace TechWorld.GCommon
 {
     public static class EntityValidations
     {

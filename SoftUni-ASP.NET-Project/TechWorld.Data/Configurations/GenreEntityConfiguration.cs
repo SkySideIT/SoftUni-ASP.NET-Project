@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SoftUni_ASP.NET_Project.Models;
+using TechWorld.Data.Models;
 
-namespace SoftUni_ASP.NET_Project.Data.Configurations
+namespace TechWorld.Data.Configurations
 {
     public class GenreEntityConfiguration : IEntityTypeConfiguration<Genre>
     {

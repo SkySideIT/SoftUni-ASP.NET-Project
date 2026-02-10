@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SoftUni_ASP.NET_Project.Data;
+using TechWorld.Data;
 
-namespace SoftUni_ASP.NET_Project
+namespace TechWorld.Web
 {
     public class Program
     {

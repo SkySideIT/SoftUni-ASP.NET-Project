@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-SoftUni_ASP.NET_Project-c427bf0e-a055-43c2-b536-7b48f9fc426f</UserSecretsId>
+    <RootNamespace>TechWorld.Web</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.23">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechWorld.Data.Models\TechWorld.Data.Models.csproj" />
+    <ProjectReference Include="..\TechWorld.Data\TechWorld.Data.csproj" />
+    <ProjectReference Include="..\TechWorld.GCommon\TechWorld.GCommon.csproj" />
+    <ProjectReference Include="..\TechWorld.Web.ViewModels\TechWorld.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
