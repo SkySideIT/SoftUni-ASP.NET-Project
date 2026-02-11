@@ -36,7 +36,14 @@ namespace TechWorld.Services.Core
 
         public async Task<Game?> GetGameByIdAsync(Guid id)
         {
-            return await _repository.GetByIdAsync(id);
+            return await _repository
+                .GetSingleAsync
+                (
+                    g => g.Id == id,
+                    g => g.Genre,
+                    g => g.Platform,
+                    g => g.Publisher
+                );
         }
 
         public async Task<IEnumerable<Game>> GetLatestGamesAsync(int count)

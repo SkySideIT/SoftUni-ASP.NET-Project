@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TechWorld.Web.ViewModels
 {
-    public class Latest3GamesCardViewModel
+    public class LatestGamesCardViewModel
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = null!;

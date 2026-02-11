@@ -1,6 +1,8 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechWorld.Data;
+using TechWorld.Data.Models;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
 
@@ -15,11 +17,13 @@ namespace TechWorld.Web.Controllers
             _gameService = gameService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            var latestGames = _gameService.GetLatestGamesAsync(3)
-                .Result
-                .Select(g => new Latest3GamesCardViewModel
+            var latestGames = await _gameService.GetLatestGamesAsync(3);
+
+            var viewModel = latestGames
+                .Select(g => new LatestGamesCardViewModel
                 {
                     Id = g.Id,
                     Title = g.Title,
@@ -27,7 +31,7 @@ namespace TechWorld.Web.Controllers
                     ImageUrl = g.ImageUrl!
                 });
             
-            return View(latestGames);
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
