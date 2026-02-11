@@ -1,4 +1,5 @@
-﻿using TechWorld.Data.Common.Interfaces;
+﻿using TechWorld.Data.Common;
+using TechWorld.Data.Common.Interfaces;
 using TechWorld.Data.Models;
 using TechWorld.Services.Core.Interfaces;
 
@@ -31,7 +32,14 @@ namespace TechWorld.Services.Core
 
         public async Task<IEnumerable<Game>> GetAllGamesAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _repository
+                .GetAllAsync
+                (
+                    g => true,
+                    g => g.Genre,
+                    g => g.Platform,
+                    g => g.Publisher
+                );
         }
 
         public async Task<Game?> GetGameByIdAsync(Guid id)

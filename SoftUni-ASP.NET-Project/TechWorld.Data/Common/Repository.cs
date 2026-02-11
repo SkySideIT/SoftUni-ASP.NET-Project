@@ -42,6 +42,18 @@ namespace TechWorld.Data.Common
 
             return await query.FirstOrDefaultAsync(predicate);
         }
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                    query = query.Include(include);
+            }
+
+            return await query.Where(predicate).ToListAsync();
+        }
         public async Task<IEnumerable<T>> GetAllAsync()
             => await _dbSet.ToListAsync();
 

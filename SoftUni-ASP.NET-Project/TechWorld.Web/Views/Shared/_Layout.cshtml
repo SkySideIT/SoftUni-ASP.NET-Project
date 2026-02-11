@@ -22,12 +22,12 @@
                 <div class="navbar-collapse collapse" id="navbarNav">
                     <ul class="nav navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/">Home</a>
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" href="/">Home</a>
                         </li>
                         @if (User.Identity!.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="/Games">Games</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Games" ? "active" : "")" href="/Games">Games</a>
                             </li>
                         }
                     </ul>

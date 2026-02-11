@@ -10,6 +10,8 @@ namespace TechWorld.Data.Common.Interfaces
     public interface IRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate,
+            params Expression<Func<T, object>>[] includes);
         Task<T?> GetByIdAsync(object id);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
         Task<T?> GetSingleAsync(Expression<Func<T, bool>> predicate,

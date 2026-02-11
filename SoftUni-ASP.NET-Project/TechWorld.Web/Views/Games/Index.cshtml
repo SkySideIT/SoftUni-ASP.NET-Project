@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TechWorld.Web.ViewModels.GameDetailsViewModel>
+
+@{
+    ViewData["Title"] = "Games";
+}
+
+<section class="py-5" style="background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);">
+    <div class="container">
+        <h1 class="display-4 fw-bold text-center text-white mb-4">Browse Games</h1>
+        <p class="lead text-center text-white mb-5">Explore our collection of the latest and greatest games!</p>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="d-flex justify-content-center mb-4">
+        <a asp-action="Create"
+           class="btn btn-warning btn-lg px-5 fw-semibold shadow mb-3">
+            <strong class="fs-4">Add New Game</strong>
+        </a>
+    </div>
+    <div class="row g-4">
+        @foreach (var game in Model)
+        {
+            <div class="col-md-4 col-sm-6">
+                <div class="card h-100 shadow-lg border-0">
+                    <img src="@game.ImageUrl" class="card-img-top" alt="@game.Title" style="height: 220px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">@game.Title</h5>
+                        <p class="card-text text-muted mb-2">
+                            @(game.Description.Length > 90 ? game.Description.Substring(0, 90) + "..." : game.Description)
+                        </p>
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item"><strong>Genre:</strong> @game.Genre</li>
+                            <li class="list-group-item"><strong>Platform:</strong> @game.Platform</li>
+                            <li class="list-group-item"><strong>Publisher:</strong> @game.Publisher</li>
+                            <li class="list-group-item"><strong>Release Date:</strong> @game.ReleaseDate.ToString("yyyy-MM-dd")</li>
+                            <li class="list-group-item"><strong>Price:</strong> $@game.Price.ToString("F2")</li>
+                        </ul>
+                        <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
+                            Edit
+                        </a>
+                        <hr />
+                        <a asp-action="Delete" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

@@ -17,9 +17,25 @@ namespace TechWorld.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var allGames = await _gameService.GetAllGamesAsync();
+
+            var viewModel = allGames
+                .Select(g => new GameDetailsViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    Description = g.Description,
+                    Price = g.Price,
+                    Genre = g.Genre.Name,
+                    Platform = g.Platform.Name,
+                    Publisher = g.Publisher.Name,
+                    ReleaseDate = g.ReleaseDate,
+                    ImageUrl = g.ImageUrl!
+                });
+
+            return View(viewModel);
         }
 
         [HttpGet]
