@@ -5,15 +5,12 @@
 }
 
 <div class="container py-5">
-    <div class="row g-5 align-items-start">
-
-        <div class="col-md-5 text-center">
-            <div class="card bg-dark border-0 shadow-sm">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <div class="card bg-dark border-0 shadow-sm mb-4 mx-auto" style="max-width: 500px;">
                 <img src="@Model.ImageUrl" alt="@Model.Title" class="card-img-top rounded">
             </div>
-        </div>
 
-        <div class="col-md-7">
             <h1 class="display-5 fw-bold mb-3">@Model.Title</h1>
 
             <div class="mb-3">
@@ -30,25 +27,24 @@
 
             <p class="lead text-muted mb-2">
                 <i class="bi bi-calendar3 me-2"></i>
-                Released on <strong>@Model.ReleaseDate.ToString("MMMM dd, yyyy")</strong>
+                Released on <strong>@Model.ReleaseDate.ToString("MMMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture)</strong>
             </p>
 
             <hr>
 
-            <p class="fs-5 lh-lg">
+            <p class="fs-5 lh-lg mb-4">
                 @Model.Description
             </p>
 
-            <div class="d-flex align-items-center justify-content-between mt-4">
-                <span class="h3 fw-bold text-success">$@Model.Price.ToString("0.00")</span>
-                <div>
-                    <a asp-controller="Games" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary me-2">
-                        <i class="bi bi-pencil"></i> Edit
-                    </a>
-                    <a asp-controller="Games" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">
-                        <i class="bi bi-trash"></i> Delete
-                    </a>
-                </div>
+            <span class="h3 fw-bold text-success d-block mb-4">$@Model.Price.ToString("0.00")</span>
+
+            <div class="d-flex justify-content-center mb-4">
+                <a asp-controller="Games" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary me-2">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <a asp-controller="Games" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
             </div>
 
             <div class="mt-4">
