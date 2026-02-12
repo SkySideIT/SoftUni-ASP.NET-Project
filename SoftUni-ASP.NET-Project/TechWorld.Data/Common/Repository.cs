@@ -9,30 +9,28 @@ using TechWorld.Data.Common.Interfaces;
 
 namespace TechWorld.Data.Common
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository : IRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly DbSet<T> _dbSet;
 
-        public Repository(ApplicationDbContext dbContext)
+        public Repository(ApplicationDbContext context)
         {
-            _context = dbContext;
-            _dbSet = _context.Set<T>();
+            _context = context;
         }
 
-        public async Task AddAsync(T entity) 
-            => await _dbSet.AddAsync(entity);
+        public async Task AddAsync<T>(T entity) where T : class
+            => await _context.Set<T>().AddAsync(entity);
 
-        public void Delete(T entity)
-            => _dbSet.Remove(entity);
+        public void Delete<T>(T entity) where T : class
+            => _context.Set<T>().Remove(entity);
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
-            => await _dbSet.Where(predicate).ToListAsync();
+        public async Task<IEnumerable<T>> FindAsync<T>(Expression<Func<T, bool>> predicate) where T : class
+            => await _context.Set<T>().Where(predicate).ToListAsync();
 
-        public async Task<T?> GetSingleAsync(Expression<Func<T, bool>> predicate,
-            params Expression<Func<T, object>>[] includes)
+        public async Task<T?> GetSingleAsync<T>(Expression<Func<T, bool>> predicate,
+            params Expression<Func<T, object>>[] includes) where T : class
         {
-            IQueryable<T> query = _dbSet;
+            IQueryable<T> query = _context.Set<T>();
 
             if (includes != null)
             {
@@ -42,9 +40,9 @@ namespace TechWorld.Data.Common
 
             return await query.FirstOrDefaultAsync(predicate);
         }
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        public async Task<IEnumerable<T>> GetAllAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes) where T : class
         {
-            IQueryable<T> query = _dbSet;
+            IQueryable<T> query = _context.Set<T>();
 
             if (includes != null)
             {
@@ -54,16 +52,16 @@ namespace TechWorld.Data.Common
 
             return await query.Where(predicate).ToListAsync();
         }
-        public async Task<IEnumerable<T>> GetAllAsync()
-            => await _dbSet.ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync<T>() where T : class
+            => await _context.Set<T>().ToListAsync();
 
-        public async Task<T?> GetByIdAsync(object id)
-            => await _dbSet.FindAsync(id);
+        public async Task<T?> GetByIdAsync<T>(object id) where T : class
+            => await _context.Set<T>().FindAsync(id);
 
         public async Task SaveChangesAsync()
             => await _context.SaveChangesAsync();
 
-        public void Update(T entity)
-            => _dbSet.Update(entity);
+        public void Update<T>(T entity) where T : class
+            => _context.Set<T>().Update(entity);
     }
 }

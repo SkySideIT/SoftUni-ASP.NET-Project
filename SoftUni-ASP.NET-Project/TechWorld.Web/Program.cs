@@ -24,7 +24,7 @@ namespace TechWorld.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IGameService, GameService>();
 
             var app = builder.Build();

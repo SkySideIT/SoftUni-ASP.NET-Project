@@ -1,4 +1,5 @@
-﻿using TechWorld.Data.Common;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using TechWorld.Data.Common;
 using TechWorld.Data.Common.Interfaces;
 using TechWorld.Data.Models;
 using TechWorld.Services.Core.Interfaces;
@@ -7,9 +8,9 @@ namespace TechWorld.Services.Core
 {
     public class GameService : IGameService
     {
-        private readonly IRepository<Game> _repository;
+        private readonly IRepository _repository;
 
-        public GameService(IRepository<Game> repository)
+        public GameService(IRepository repository)
         {
             _repository = repository;
         }
@@ -22,7 +23,7 @@ namespace TechWorld.Services.Core
 
         public async Task DeleteGameAsync(Guid id)
         {
-            var game = await _repository.GetByIdAsync(id);
+            var game = await _repository.GetByIdAsync<Game>(id);
             if (game != null)
             {
                 _repository.Delete(game);
@@ -33,7 +34,7 @@ namespace TechWorld.Services.Core
         public async Task<IEnumerable<Game>> GetAllGamesAsync()
         {
             return await _repository
-                .GetAllAsync
+                .GetAllAsync<Game>
                 (
                     g => true,
                     g => g.Genre,
@@ -45,7 +46,7 @@ namespace TechWorld.Services.Core
         public async Task<Game?> GetGameByIdAsync(Guid id)
         {
             return await _repository
-                .GetSingleAsync
+                .GetSingleAsync<Game>
                 (
                     g => g.Id == id,
                     g => g.Genre,
@@ -56,7 +57,7 @@ namespace TechWorld.Services.Core
 
         public async Task<IEnumerable<Game>> GetLatestGamesAsync(int count)
         {
-            var allGames = await _repository.GetAllAsync();
+            var allGames = await _repository.GetAllAsync<Game>();
             return allGames.OrderByDescending(g => g.ReleaseDate).Take(count);
         }
 
