@@ -1,0 +1,79 @@
+﻿@model TechWorld.Web.ViewModels.GameCreateInputModel
+
+@{
+    ViewData["Title"] = "Add New Game";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 p-4" style="background: #ffc107">
+                <h2 class="mb-4 text-center">
+                    <i class="bi bi-plus-circle text-primary me-2"></i>
+                    <strong>Add New Game</strong>
+                </h2>
+                <form asp-action="Create" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ReleaseDate" class="form-label"></label>
+                        <input asp-for="ReleaseDate" class="form-control" type="date" />
+                        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ImageUrl" class="form-label"></label>
+                        <input asp-for="ImageUrl" class="form-control" />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="GenreId" class="form-label"></label>
+                        <select asp-for="GenreId" class="form-select">
+                            <option value="">---Select a genre---</option>
+                            @foreach (var genre in Model.Genres)
+                            {
+                                <option value="@genre.Id">@genre.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="GenreId" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PlatformId" class="form-label"></label>
+                        <select asp-for="PlatformId" class="form-select">
+                            <option value="">---Select a platform---</option>
+                            @foreach (var platform in Model.Platforms)
+                            {
+                                <option value="@platform.Id">@platform.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="PlatformId" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PublisherName" class="form-label"></label>
+                        <input asp-for="PublisherName" class="form-control" />
+                        <span asp-validation-for="PublisherName" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
+                        Create
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

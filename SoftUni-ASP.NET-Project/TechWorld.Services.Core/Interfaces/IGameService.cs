@@ -16,5 +16,8 @@ namespace TechWorld.Services.Core.Interfaces
         Task AddGameAsync(Game game);
         Task UpdateGameAsync(Game game);
         Task DeleteGameAsync(Guid id);
+        Task<IEnumerable<Genre>> GetAllGenresAsync();
+        Task<IEnumerable<Platform>> GetAllPlatformsAsync();
+        Task<IEnumerable<Publisher>> GetAllPublishersAsync();
     }
 }

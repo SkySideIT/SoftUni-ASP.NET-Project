@@ -43,6 +43,15 @@ namespace TechWorld.Services.Core
                 );
         }
 
+        public async Task<IEnumerable<Genre>> GetAllGenresAsync()
+            => await _repository.GetAllAsync<Genre>();
+
+        public async Task<IEnumerable<Platform>> GetAllPlatformsAsync()
+            => await _repository.GetAllAsync<Platform>();
+
+        public async Task<IEnumerable<Publisher>> GetAllPublishersAsync()
+            => await _repository.GetAllAsync<Publisher>();
+
         public async Task<Game?> GetGameByIdAsync(Guid id)
         {
             return await _repository

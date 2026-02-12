@@ -64,5 +64,28 @@ namespace TechWorld.Web.Controllers
 
             return View(gameModel);
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Create()
+        {
+            var model = new GameCreateInputModel
+            {
+                Genres = (await _gameService.GetAllGenresAsync())
+                .Select(g => new SelectGameGenreViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                }),
+                Platforms = (await _gameService.GetAllPlatformsAsync())
+                .Select(p => new SelectGamePlatformViewModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name
+                })
+            };
+
+            return View(model);
+        }
     }
 }
