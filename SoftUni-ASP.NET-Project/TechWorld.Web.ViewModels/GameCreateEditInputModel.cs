@@ -8,7 +8,7 @@ using static TechWorld.GCommon.EntityValidations;
 
 namespace TechWorld.Web.ViewModels
 {
-    public class GameCreateInputModel
+    public class GameCreateEditInputModel
     {
         [Required]
         [MinLength(GameTitleMinLength)]

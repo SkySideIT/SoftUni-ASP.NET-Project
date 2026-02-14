@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TechWorld.Data.Models;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
 
@@ -20,7 +18,7 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var viewModel = await _gameService.CreateAllGamesDetailsViewModelAsync();
+            IEnumerable<GameDetailsViewModel?> viewModel = await _gameService.CreateAllGamesDetailsViewModelAsync();
 
             if (viewModel == null)
             {
@@ -48,7 +46,7 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            var model = new GameCreateInputModel
+            GameCreateEditInputModel model = new GameCreateEditInputModel
             {
                 Genres = await _gameService.GetAllGenresAsync(),
                 Platforms = await _gameService.GetAllPlatformsAsync()
@@ -59,7 +57,7 @@ namespace TechWorld.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(GameCreateInputModel model)
+        public async Task<IActionResult> Create(GameCreateEditInputModel model)
         {
             bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState);
             if (!ModelState.IsValid || !isValid)

@@ -56,7 +56,7 @@ namespace TechWorld.Services.Core
             return viewModel;
         }
 
-        public async Task CreateGameAsync(GameCreateInputModel model)
+        public async Task CreateGameAsync(GameCreateEditInputModel model)
         {
             Publisher newPublisher = new Publisher { Name = model.PublisherName.Trim() };
             await _repository.AddAsync(newPublisher);
@@ -184,7 +184,7 @@ namespace TechWorld.Services.Core
             await _repository.SaveChangesAsync();
         }
 
-        public async Task<bool> ValidateGameInputAsync(GameCreateInputModel model, ModelStateDictionary modelState)
+        public async Task<bool> ValidateGameInputAsync(GameCreateEditInputModel model, ModelStateDictionary modelState)
         {
             if (model.Price < 0 || model.Price > 500)
             {
