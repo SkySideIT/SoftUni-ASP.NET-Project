@@ -50,25 +50,34 @@ namespace TechWorld.Services.Core
 
         public async Task<GameDetailsViewModel?> CreateGameDetailsViewModelAsync(Guid id)
         {
-            var game = await _repository.GetByIdAsync<Game>(id);
+            var game = await _repository
+                .GetSingleAsync<Game>
+                (
+                    g => g.Id == id,
+                    g => g.Genre,
+                    g => g.Platform,
+                    g => g.Publisher
+                );
 
             if (game == null)
             {
                 return null!;
             }
 
-            return new GameDetailsViewModel
-                   {
-                       Id = game.Id,
-                       Title = game.Title,
-                       Description = game.Description,
-                       Price = game.Price,
-                       Genre = game.Genre.Name,
-                       Platform = game.Platform.Name,
-                       Publisher = game.Publisher.Name,
-                       ReleaseDate = game.ReleaseDate,
-                       ImageUrl = game.ImageUrl!
-                   };
+            var gameModel = new GameDetailsViewModel
+            {
+                Id = game.Id,
+                Title = game.Title,
+                Description = game.Description,
+                Price = game.Price,
+                Genre = game.Genre.Name,
+                Platform = game.Platform.Name,
+                Publisher = game.Publisher.Name,
+                ReleaseDate = game.ReleaseDate,
+                ImageUrl = game.ImageUrl!
+            };
+
+            return gameModel;
         }
 
         public async Task DeleteGameAsync(Guid id)
