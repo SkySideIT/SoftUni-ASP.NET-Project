@@ -24,6 +24,38 @@ namespace TechWorld.Services.Core
             await _repository.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<GameDetailsViewModel?>> CreateAllGamesDetailsViewModelAsync()
+        {
+            var allGames = await _repository
+                .GetAllAsync<Game>
+                (
+                    g => true,
+                    g => g.Genre,
+                    g => g.Platform,
+                    g => g.Publisher
+                );
+
+            if (allGames == null)
+            {
+                return null!;
+            }
+
+            var viewModel = allGames.Select(g => new GameDetailsViewModel
+            {
+                Id = g.Id,
+                Title = g.Title,
+                Description = g.Description,
+                Price = g.Price,
+                Genre = g.Genre.Name,
+                Platform = g.Platform.Name,
+                Publisher = g.Publisher.Name,
+                ReleaseDate = g.ReleaseDate,
+                ImageUrl = g.ImageUrl!
+            });
+
+            return viewModel;
+        }
+
         public async Task CreateGameAsync(GameCreateInputModel model)
         {
             Publisher newPublisher = new Publisher { Name = model.PublisherName.Trim() };

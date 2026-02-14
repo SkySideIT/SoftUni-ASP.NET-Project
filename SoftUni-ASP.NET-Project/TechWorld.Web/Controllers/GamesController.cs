@@ -20,21 +20,12 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var allGames = await _gameService.GetAllGamesAsync();
+            var viewModel = await _gameService.CreateAllGamesDetailsViewModelAsync();
 
-            var viewModel = allGames
-                .Select(g => new GameDetailsViewModel
-                {
-                    Id = g.Id,
-                    Title = g.Title,
-                    Description = g.Description,
-                    Price = g.Price,
-                    Genre = g.Genre.Name,
-                    Platform = g.Platform.Name,
-                    Publisher = g.Publisher.Name,
-                    ReleaseDate = g.ReleaseDate,
-                    ImageUrl = g.ImageUrl!
-                });
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
 
             return View(viewModel);
         }
