@@ -21,6 +21,7 @@ namespace TechWorld.Services.Core.Interfaces
         Task<IEnumerable<SelectGameGenreViewModel>> GetAllGenresAsync();
         Task<IEnumerable<SelectGamePlatformViewModel>> GetAllPlatformsAsync();
         Task CreateGameAsync(GameCreateInputModel model);
+        Task<GameDetailsViewModel?> CreateGameDetailsViewModelAsync(Guid id);
         Task<bool> ValidateGameInputAsync(GameCreateInputModel model, ModelStateDictionary modelState);
     }
 }

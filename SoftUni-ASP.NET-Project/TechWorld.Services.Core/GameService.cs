@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TechWorld.Data.Common;
 using TechWorld.Data.Common.Interfaces;
@@ -45,6 +46,29 @@ namespace TechWorld.Services.Core
 
             await _repository.AddAsync(game);
             await _repository.SaveChangesAsync();
+        }
+
+        public async Task<GameDetailsViewModel?> CreateGameDetailsViewModelAsync(Guid id)
+        {
+            var game = await _repository.GetByIdAsync<Game>(id);
+
+            if (game == null)
+            {
+                return null!;
+            }
+
+            return new GameDetailsViewModel
+                   {
+                       Id = game.Id,
+                       Title = game.Title,
+                       Description = game.Description,
+                       Price = game.Price,
+                       Genre = game.Genre.Name,
+                       Platform = game.Platform.Name,
+                       Publisher = game.Publisher.Name,
+                       ReleaseDate = game.ReleaseDate,
+                       ImageUrl = game.ImageUrl!
+                   };
         }
 
         public async Task DeleteGameAsync(Guid id)
