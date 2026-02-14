@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TechWorld.Data.Models;
+using TechWorld.Web.ViewModels;
 
 namespace TechWorld.Services.Core.Interfaces
 {
@@ -16,8 +18,9 @@ namespace TechWorld.Services.Core.Interfaces
         Task AddGameAsync(Game game);
         Task UpdateGameAsync(Game game);
         Task DeleteGameAsync(Guid id);
-        Task<IEnumerable<Genre>> GetAllGenresAsync();
-        Task<IEnumerable<Platform>> GetAllPlatformsAsync();
-        Task<IEnumerable<Publisher>> GetAllPublishersAsync();
+        Task<IEnumerable<SelectGameGenreViewModel>> GetAllGenresAsync();
+        Task<IEnumerable<SelectGamePlatformViewModel>> GetAllPlatformsAsync();
+        Task CreateGameAsync(GameCreateInputModel model);
+        Task<bool> ValidateGameInputAsync(GameCreateInputModel model, ModelStateDictionary modelState);
     }
 }

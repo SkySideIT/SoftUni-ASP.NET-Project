@@ -21,6 +21,7 @@ namespace TechWorld.Web.ViewModels
         public string Description { get; set; } = null!;
 
         [Required]
+        [Range(0.00, 500)]
         public decimal Price { get; set; }
 
         [Required]

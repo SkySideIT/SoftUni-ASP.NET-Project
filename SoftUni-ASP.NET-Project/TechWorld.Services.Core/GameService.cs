@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TechWorld.Data.Common;
 using TechWorld.Data.Common.Interfaces;
 using TechWorld.Data.Models;
 using TechWorld.Services.Core.Interfaces;
+using TechWorld.Web.ViewModels;
 
 namespace TechWorld.Services.Core
 {
@@ -17,6 +19,30 @@ namespace TechWorld.Services.Core
 
         public async Task AddGameAsync(Game game)
         {
+            await _repository.AddAsync(game);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task CreateGameAsync(GameCreateInputModel model)
+        {
+            Publisher newPublisher = new Publisher { Name = model.PublisherName.Trim() };
+            await _repository.AddAsync(newPublisher);
+            await _repository.SaveChangesAsync();
+            int publisherId = newPublisher.Id;
+
+            Game game = new Game
+            {
+                Id = Guid.NewGuid(),
+                Title = model.Title,
+                Description = model.Description,
+                Price = model.Price,
+                GenreId = model.GenreId,
+                PlatformId = model.PlatformId,
+                PublisherId = publisherId,
+                ReleaseDate = model.ReleaseDate,
+                ImageUrl = model.ImageUrl
+            };
+
             await _repository.AddAsync(game);
             await _repository.SaveChangesAsync();
         }
@@ -43,14 +69,31 @@ namespace TechWorld.Services.Core
                 );
         }
 
-        public async Task<IEnumerable<Genre>> GetAllGenresAsync()
-            => await _repository.GetAllAsync<Genre>();
+        public async Task<IEnumerable<SelectGameGenreViewModel>> GetAllGenresAsync()
+        {
+            var genres = await _repository.GetAllAsync<Genre>();
 
-        public async Task<IEnumerable<Platform>> GetAllPlatformsAsync()
-            => await _repository.GetAllAsync<Platform>();
+            return genres
+                .Select(g => new SelectGameGenreViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .ToArray();
+        }
 
-        public async Task<IEnumerable<Publisher>> GetAllPublishersAsync()
-            => await _repository.GetAllAsync<Publisher>();
+        public async Task<IEnumerable<SelectGamePlatformViewModel>> GetAllPlatformsAsync()
+        {
+            var platforms = await _repository.GetAllAsync<Platform>();
+
+            return platforms
+                .Select(g => new SelectGamePlatformViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .ToArray();
+        }
 
         public async Task<Game?> GetGameByIdAsync(Guid id)
         {
@@ -74,6 +117,39 @@ namespace TechWorld.Services.Core
         {
             _repository.Update(game);
             await _repository.SaveChangesAsync();
+        }
+
+        public async Task<bool> ValidateGameInputAsync(GameCreateInputModel model, ModelStateDictionary modelState)
+        {
+            if (model.Price < 0 || model.Price > 500)
+            {
+                modelState.AddModelError(nameof(model.Price), "Price must be greater than 0.");
+            }
+
+            if (model.ReleaseDate > DateOnly.FromDateTime(DateTime.Today))
+            {
+                modelState.AddModelError(nameof(model.ReleaseDate), "Release date cannot be in the future.");
+            }
+
+            bool genreExists = (await _repository.FindAsync<Genre>(g => g.Id == model.GenreId)).Any();
+            if (!genreExists)
+            {
+                modelState.AddModelError(nameof(model.GenreId), "Selected genre does not exist.");
+            }
+
+            bool platformExists = (await _repository.FindAsync<Platform>(g => g.Id == model.PlatformId)).Any();
+            if (!genreExists)
+            {
+                modelState.AddModelError(nameof(model.PlatformId), "Selected platform does not exist.");
+            }
+
+            bool duplicate = (await _repository.FindAsync<Game>(g => g.Title.ToLower() == model.Title.ToLower())).Any();
+            if (duplicate)
+            {
+                modelState.AddModelError(nameof(model.Title), $"A game named '{model.Title}' already exists.");
+            }
+
+            return modelState.IsValid;
         }
     }
 }

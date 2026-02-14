@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechWorld.Data.Models;
 using TechWorld.Services.Core.Interfaces;
@@ -71,21 +72,39 @@ namespace TechWorld.Web.Controllers
         {
             var model = new GameCreateInputModel
             {
-                Genres = (await _gameService.GetAllGenresAsync())
-                .Select(g => new SelectGameGenreViewModel
-                {
-                    Id = g.Id,
-                    Name = g.Name
-                }),
-                Platforms = (await _gameService.GetAllPlatformsAsync())
-                .Select(p => new SelectGamePlatformViewModel()
-                {
-                    Id = p.Id,
-                    Name = p.Name
-                })
+                Genres = await _gameService.GetAllGenresAsync(),
+                Platforms = await _gameService.GetAllPlatformsAsync()
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Create(GameCreateInputModel model)
+        {
+            bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState);
+            if (!ModelState.IsValid || !isValid)
+            {
+                model.Genres = await _gameService.GetAllGenresAsync();
+                model.Platforms = await _gameService.GetAllPlatformsAsync();
+
+                return View(model);
+            }
+
+            try
+            {
+                await _gameService.CreateGameAsync(model);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the game. Please try again later.");
+
+                return View(model);
+            }
         }
     }
 }
