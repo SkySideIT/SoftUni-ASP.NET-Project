@@ -73,7 +73,7 @@ namespace TechWorld.Services.Core
                 PlatformId = model.PlatformId,
                 PublisherId = publisherId,
                 ReleaseDate = model.ReleaseDate,
-                ImageUrl = model.ImageUrl
+                ImageUrl = model.ImageUrl?.Trim() ?? "https://cdn.cloudflare.steamstatic.com/steam/apps/256658589/header.jpg"
             };
 
             await _repository.AddAsync(game);
@@ -106,10 +106,21 @@ namespace TechWorld.Services.Core
                 Platform = game.Platform.Name,
                 Publisher = game.Publisher.Name,
                 ReleaseDate = game.ReleaseDate,
-                ImageUrl = game.ImageUrl!
+                ImageUrl = game.ImageUrl?.Trim() ?? "https://cdn.cloudflare.steamstatic.com/steam/apps/256658589/header.jpg"
             };
 
             return gameModel;
+        }
+
+        public async Task<GameCreateEditInputModel?> CreateGameViewModel()
+        {
+            GameCreateEditInputModel model = new GameCreateEditInputModel
+            {
+                Genres = await GetAllGenresAsync(),
+                Platforms = await GetAllPlatformsAsync()
+            };
+
+            return model;
         }
 
         public async Task DeleteGameAsync(Guid id)
@@ -120,6 +131,31 @@ namespace TechWorld.Services.Core
                 _repository.Delete(game);
                 await _repository.SaveChangesAsync();
             }
+        }
+
+        public async Task<GameCreateEditInputModel?> EditGameViewModel(Guid id)
+        {
+            Game? game = await _repository.GetSingleAsync<Game>
+            (
+                g => g.Id == id,
+                g => g.Publisher
+            );
+
+            GameCreateEditInputModel viewModel = new GameCreateEditInputModel
+            {
+                Title = game!.Title,
+                Description = game.Description,
+                Price = game.Price,
+                PublisherName = game.Publisher.Name,
+                GenreId = game.GenreId,
+                Genres = await GetAllGenresAsync(),
+                PlatformId = game.PlatformId,
+                Platforms = await GetAllPlatformsAsync(),
+                ReleaseDate = game.ReleaseDate,
+                ImageUrl = game.ImageUrl?.Trim() ?? "https://cdn.cloudflare.steamstatic.com/steam/apps/256658589/header.jpg",
+            };
+
+            return viewModel;
         }
 
         public async Task<IEnumerable<Game>> GetAllGamesAsync()

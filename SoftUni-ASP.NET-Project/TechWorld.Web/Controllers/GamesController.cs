@@ -46,11 +46,7 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            GameCreateEditInputModel model = new GameCreateEditInputModel
-            {
-                Genres = await _gameService.GetAllGenresAsync(),
-                Platforms = await _gameService.GetAllPlatformsAsync()
-            };
+            GameCreateEditInputModel? model = await _gameService.CreateGameViewModel();
 
             return View(model);
         }
@@ -81,6 +77,20 @@ namespace TechWorld.Web.Controllers
 
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            GameCreateEditInputModel? model = await _gameService.EditGameViewModel(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
         }
     }
 }
