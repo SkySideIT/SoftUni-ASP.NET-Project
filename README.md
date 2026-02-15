@@ -112,23 +112,6 @@ When the project runs for the first time, the database is automatically seeded w
 - <img width="1318" height="1225" alt="image" src="https://github.com/user-attachments/assets/15a3a12e-fe9e-467c-bd40-29451cc03e11" />
 - <img width="1742" height="795" alt="image" src="https://github.com/user-attachments/assets/a345382d-e831-4f02-9ec9-c624783419c9" />
 
-
----
-
-## 👨‍💻 Project Structure
-
-/TechWorld
- ┣ /Controllers
- ┣ /Data
- ┣ /Models
- ┣ /Services
- ┣ /Repositories
- ┣ /ViewModels
- ┣ /Views
- ┣ /wwwroot
- ┣ appsettings.json
- ┗ Program.cs
-
 ---
 
 ## 💾 Main Features Summary
