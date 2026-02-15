@@ -146,5 +146,23 @@ namespace TechWorld.Web.Controllers
 
             return View(game);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            try
+            {
+                await _gameService.DeleteGameAsync(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                return Redirect(Url.Action("Delete", "Games") + "/" + id);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
