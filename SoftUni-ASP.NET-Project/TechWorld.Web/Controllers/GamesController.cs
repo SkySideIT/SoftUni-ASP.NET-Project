@@ -48,6 +48,11 @@ namespace TechWorld.Web.Controllers
         {
             GameCreateEditInputModel? model = await _gameService.CreateGameViewModel();
 
+            if (model == null)
+            {
+                return NotFound();
+            }
+
             return View(model);
         }
 
@@ -55,7 +60,7 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Create(GameCreateEditInputModel model)
         {
-            bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState);
+            bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState, false);
             if (!ModelState.IsValid || !isValid)
             {
                 model.Genres = await _gameService.GetAllGenresAsync();
@@ -91,6 +96,41 @@ namespace TechWorld.Web.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit([FromRoute] Guid id, GameCreateEditInputModel model)
+        {
+            bool gameExists = await _gameService.GameExists(id);
+
+            if (!gameExists)
+            {
+                return NotFound();
+            }
+
+            bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState, true);
+            if (!ModelState.IsValid || !isValid)
+            {
+                model.Genres = await _gameService.GetAllGenresAsync();
+                model.Platforms = await _gameService.GetAllPlatformsAsync();
+
+                return View(model);
+            }
+
+            try
+            {
+                await _gameService.EditGameAsync(id, model);
+
+                return Redirect(Url.Action("Details", "Games") + "/" + id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                ModelState.AddModelError(string.Empty, "An error occurred while editing the game. Please try again later.");
+
+                return View(model);
+            }
         }
     }
 }
