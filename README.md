@@ -105,12 +105,17 @@ When the project runs for the first time, the database is automatically seeded w
 
 ## 📸 Screenshots
 
-- <img width="1568" height="1230" alt="image" src="https://github.com/user-attachments/assets/68774ac1-7bf9-4f98-8d51-a836bd58f9ec" />
-- <img width="1573" height="1137" alt="image" src="https://github.com/user-attachments/assets/9932a9d8-b960-43c8-8519-7810c49a7789" />
-- <img width="690" height="1171" alt="image" src="https://github.com/user-attachments/assets/253336b6-ff29-4ea1-b292-ab933dd7f6d4" />
-- <img width="1350" height="1188" alt="image" src="https://github.com/user-attachments/assets/d54c4bd9-fb24-44fe-9804-a718ea8d0740" />
-- <img width="1318" height="1225" alt="image" src="https://github.com/user-attachments/assets/15a3a12e-fe9e-467c-bd40-29451cc03e11" />
-- <img width="1742" height="795" alt="image" src="https://github.com/user-attachments/assets/a345382d-e831-4f02-9ec9-c624783419c9" />
+<img width="1568" height="1230" alt="image" src="https://github.com/user-attachments/assets/68774ac1-7bf9-4f98-8d51-a836bd58f9ec" />
+<hr>
+<img width="1573" height="1137" alt="image" src="https://github.com/user-attachments/assets/9932a9d8-b960-43c8-8519-7810c49a7789" />
+<hr>
+<img width="690" height="1171" alt="image" src="https://github.com/user-attachments/assets/253336b6-ff29-4ea1-b292-ab933dd7f6d4" />
+<hr>
+<img width="1350" height="1188" alt="image" src="https://github.com/user-attachments/assets/d54c4bd9-fb24-44fe-9804-a718ea8d0740" />
+<hr>
+<img width="1318" height="1225" alt="image" src="https://github.com/user-attachments/assets/15a3a12e-fe9e-467c-bd40-29451cc03e11" />
+<hr>
+<img width="1742" height="795" alt="image" src="https://github.com/user-attachments/assets/a345382d-e831-4f02-9ec9-c624783419c9" />
 
 ---
 
