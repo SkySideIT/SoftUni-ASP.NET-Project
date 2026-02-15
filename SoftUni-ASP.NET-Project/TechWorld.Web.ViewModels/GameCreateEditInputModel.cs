@@ -27,9 +27,8 @@ namespace TechWorld.Web.ViewModels
         [Required]
         public DateOnly ReleaseDate { get; set; }
 
-        [Required]
         [Url]
-        public string ImageUrl { get; set; } = null!;
+        public string? ImageUrl { get; set; }
 
         [Required]
         [Display(Name = "Genre")]

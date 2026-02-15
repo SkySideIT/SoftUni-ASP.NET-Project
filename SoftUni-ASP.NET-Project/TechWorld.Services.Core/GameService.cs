@@ -75,7 +75,7 @@ namespace TechWorld.Services.Core
             await _repository.SaveChangesAsync();
         }
 
-        public async Task<GameDetailsViewModel?> CreateGameDetailsViewModelAsync(Guid id)
+        public async Task<GameDetailsViewModel?> GameDetailsViewModelAsync(Guid id)
         {
             var game = await _repository
                 .GetSingleAsync<Game>
@@ -116,6 +116,37 @@ namespace TechWorld.Services.Core
             };
 
             return model;
+        }
+
+        public async Task DeleteGameAsync(Guid id)
+        {
+            Game? game = await _repository.GetSingleAsync<Game>
+                (
+                    g => g.Id == id,
+                    g => g.Genre,
+                    g => g.Platform,
+                    g => g.Publisher
+                );
+
+            if (game == null)
+            {
+                throw new InvalidOperationException("Game not found.");
+            }
+
+            Publisher publisher = game.Publisher;
+
+            _repository.Delete(game);
+            await _repository.SaveChangesAsync();
+
+            bool hasOtherGames = (await _repository
+                .GetAllAsync<Game>(g => g.PublisherId == publisher.Id))
+                .Any();
+
+            if (!hasOtherGames)
+            {
+                _repository.Delete(publisher);
+                await _repository.SaveChangesAsync();
+            }
         }
 
         public async Task EditGameAsync([FromRoute] Guid id, GameCreateEditInputModel model)

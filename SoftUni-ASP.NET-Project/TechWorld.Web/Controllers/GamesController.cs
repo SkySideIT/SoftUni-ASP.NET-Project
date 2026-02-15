@@ -32,7 +32,7 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Details(Guid id)
         {
-            GameDetailsViewModel? gameModel = await _gameService.CreateGameDetailsViewModelAsync(id);
+            GameDetailsViewModel? gameModel = await _gameService.GameDetailsViewModelAsync(id);
 
             if (gameModel == null)
             {
@@ -131,6 +131,20 @@ namespace TechWorld.Web.Controllers
 
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            GameDetailsViewModel? game = await _gameService.GameDetailsViewModelAsync(id);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            return View(game);
         }
     }
 }

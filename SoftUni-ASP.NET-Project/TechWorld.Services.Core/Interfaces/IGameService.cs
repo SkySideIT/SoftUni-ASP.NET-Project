@@ -20,10 +20,11 @@ namespace TechWorld.Services.Core.Interfaces
         Task<IEnumerable<SelectGamePlatformViewModel>> GetAllPlatformsAsync();
         Task CreateGameAsync(GameCreateEditInputModel model);
         Task EditGameAsync(Guid id, GameCreateEditInputModel model);
-        Task<GameDetailsViewModel?> CreateGameDetailsViewModelAsync(Guid id);
+        Task<GameDetailsViewModel?> GameDetailsViewModelAsync(Guid id);
         Task<IEnumerable<GameDetailsViewModel?>> CreateAllGamesDetailsViewModelAsync();
         Task<GameCreateEditInputModel?> CreateGameViewModel();
         Task<GameCreateEditInputModel?> EditGameViewModel(Guid id);
+        Task DeleteGameAsync(Guid id);
         Task<bool> ValidateGameInputAsync(GameCreateEditInputModel model, ModelStateDictionary modelState, bool isEdit);
     }
 }
