@@ -16,6 +16,7 @@ namespace TechWorld.Data
         public virtual DbSet<Genre> Genres { get; set; } = null!;
         public virtual DbSet<Platform> Platforms { get; set; } = null!;
         public virtual DbSet<Publisher> Publishers { get; set; } = null!;
+        public virtual DbSet<UserGame> UsersGames { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

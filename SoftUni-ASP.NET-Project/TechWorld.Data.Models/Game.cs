@@ -43,5 +43,8 @@ namespace TechWorld.Data.Models
         public int PublisherId { get; set; }
 
         public virtual Publisher Publisher { get; set; } = null!;
+
+        public virtual ICollection<UserGame> GameUsersWishlist { get; set; } 
+            = new List<UserGame>();
     }
 }
