@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TechWorld.Data.Common;
 using TechWorld.Data.Common.Interfaces;
 using TechWorld.Data.Models;
+using TechWorld.GCommon.Exceptions;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
 
@@ -50,6 +51,42 @@ namespace TechWorld.Services.Core
             });
 
             return viewModel;
+        }
+
+        public async Task AddAsync(string userId, Guid gameId)
+        {
+            bool exists = await ExistsAsync(userId, gameId);
+
+            if (exists)
+            {
+                throw new EntityAlreadyExistsException("Game is already in wishlist.");
+            }
+
+            bool gameExists = await _repository.GetByIdAsync<Game>(gameId) != null;
+
+            if (!gameExists)
+            {
+                throw new EntityNotFoundException("Game not found.");
+            }
+
+            UserGame entity = new UserGame
+            {
+                UserId = userId,
+                GameId = gameId
+            };
+
+            await _repository.AddAsync(entity);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task<bool> ExistsAsync(string userId, Guid gameId)
+        {
+            var entity = await _repository.GetSingleAsync<UserGame>
+            (
+                x => x.UserId.ToLower() == userId.ToLower() && x.GameId == gameId
+            );
+
+            return entity != null;
         }
     }
 }

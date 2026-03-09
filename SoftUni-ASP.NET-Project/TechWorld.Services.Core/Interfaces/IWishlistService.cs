@@ -10,9 +10,9 @@ namespace TechWorld.Services.Core.Interfaces
 {
     public interface IWishlistService
     {
-        //Task AddAsync(string userId, int gameId);
+        Task AddAsync(string userId, Guid gameId);
         //Task RemoveAsync(string userId, int gameId);
         Task<IEnumerable<GameDetailsViewModel?>> GetUserWishlistByIdAsync(string userId);
-        //Task<bool> ExistsAsync(string userId, int gameId);
+        Task<bool> ExistsAsync(string userId, Guid gameId);
     }
 }

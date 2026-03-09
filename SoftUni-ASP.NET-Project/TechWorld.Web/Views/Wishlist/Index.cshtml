@@ -1,81 +1,65 @@
 ﻿@model IEnumerable<GameDetailsViewModel>
 
-@{
-    ViewData["Title"] = "My Wishlist";
-}
-
 <div class="container mt-5">
     <div class="d-flex justify-content-center">
 
-        <div class="card shadow-sm border-0" style="width: 100%; max-width: 900px; background-color:#FFC300">
+        <div class="card shadow-sm border-0"
+             style="width:100%; max-width:1000px; background-color:#FFC300">
+
             <div class="card-body p-4">
 
                 <h1 class="text-center mb-4"><strong>My Wishlist</strong></h1>
 
-                @if (!Model.Any())
-                {
-                    <div class="text-center">
-                        <p class="lead">Your wishlist is empty.</p>
+                <div class="row g-4">
 
-                        <a asp-controller="Games"
-                           asp-action="Index"
-                           class="btn btn-primary mt-3">
-                           Browse Games
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <table class="table table-hover">
+                    @foreach (var game in Model)
+                    {
+                        <div class="col-md-4">
 
-                        <thead>
-                            <tr>
-                                <th>Game</th>
-                                <th>Genre</th>
-                                <th>Platform</th>
-                                <th>Publisher</th>
-                                <th>Price</th>
-                                <th class="text-end">Actions</th>
-                            </tr>
-                        </thead>
+                            <div class="card h-100 shadow-sm">
 
-                        <tbody>
-                        @foreach (var game in Model)
-                        {
-                            <tr>
+                                <img src="@game.ImageUrl"
+                                     class="card-img-top"
+                                     style="height:200px; object-fit:cover;"
+                                     onerror="this.src='/images/no-image.png'" />
 
-                                <td>@game.Title</td>
-                                <td>@game.Genre</td>
-                                <td>@game.Platform</td>
-                                <td>@game.Publisher</td>
-                                <td>$@game.Price</td>
+                                <div class="card-body">
 
-                                <td class="text-end">
+                                    <h5 class="card-title">@game.Title</h5>
+
+                                    <p class="card-text">
+                                        <strong>Genre:</strong> @game.Genre <br />
+                                        <strong>Platform:</strong> @game.Platform <br />
+                                        <strong>Publisher:</strong> @game.Publisher
+                                    </p>
+
+                                    <p class="fw-bold">$@game.Price</p>
 
                                     <a asp-controller="Games"
                                        asp-action="Details"
                                        asp-route-id="@game.Id"
                                        class="btn btn-dark btn-sm">
-                                       Details
+                                        Details
                                     </a>
 
                                     <a asp-controller="Wishlist"
                                        asp-action="Remove"
                                        asp-route-gameId="@game.Id"
                                        class="btn btn-danger btn-sm">
-                                       Remove
+                                        Remove
                                     </a>
 
-                                </td>
+                                </div>
 
-                            </tr>
-                        }
-                        </tbody>
+                            </div>
 
-                    </table>
-                }
+                        </div>
+                    }
+
+                </div>
 
             </div>
+
         </div>
 
     </div>

@@ -36,6 +36,10 @@
                             <li class="list-group-item"><strong>Release Date:</strong> @game.ReleaseDate.ToString("yyyy-MM-dd")</li>
                             <li class="list-group-item"><strong>Price:</strong> $@game.Price.ToString("F2")</li>
                         </ul>
+                        <a asp-controller="Wishlist" asp-action="Add" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
+                            ❤️ Add to Wishlist
+                        </a>
+                        <hr />
                         <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
                             Edit
                         </a>
