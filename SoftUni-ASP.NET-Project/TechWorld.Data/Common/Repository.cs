@@ -9,8 +9,9 @@ using TechWorld.Data.Common.Interfaces;
 
 namespace TechWorld.Data.Common
 {
-    public class Repository : IRepository
+    public class Repository : IRepository, IDisposable
     {
+        private bool _isDisposed = false;
         private readonly ApplicationDbContext _context;
 
         public Repository(ApplicationDbContext context)
@@ -63,5 +64,24 @@ namespace TechWorld.Data.Common
 
         public void Update<T>(T entity) where T : class
             => _context.Set<T>().Update(entity);
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+
+            _isDisposed = true;
+        }
     }
 }
