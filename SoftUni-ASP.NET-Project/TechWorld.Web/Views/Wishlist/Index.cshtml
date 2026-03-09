@@ -1,0 +1,82 @@
+﻿@model IEnumerable<GameDetailsViewModel>
+
+@{
+    ViewData["Title"] = "My Wishlist";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center">
+
+        <div class="card shadow-sm border-0" style="width: 100%; max-width: 900px; background-color:#FFC300">
+            <div class="card-body p-4">
+
+                <h1 class="text-center mb-4"><strong>My Wishlist</strong></h1>
+
+                @if (!Model.Any())
+                {
+                    <div class="text-center">
+                        <p class="lead">Your wishlist is empty.</p>
+
+                        <a asp-controller="Games"
+                           asp-action="Index"
+                           class="btn btn-primary mt-3">
+                           Browse Games
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Game</th>
+                                <th>Genre</th>
+                                <th>Platform</th>
+                                <th>Publisher</th>
+                                <th>Price</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (var game in Model)
+                        {
+                            <tr>
+
+                                <td>@game.Title</td>
+                                <td>@game.Genre</td>
+                                <td>@game.Platform</td>
+                                <td>@game.Publisher</td>
+                                <td>$@game.Price</td>
+
+                                <td class="text-end">
+
+                                    <a asp-controller="Games"
+                                       asp-action="Details"
+                                       asp-route-id="@game.Id"
+                                       class="btn btn-dark btn-sm">
+                                       Details
+                                    </a>
+
+                                    <a asp-controller="Wishlist"
+                                       asp-action="Remove"
+                                       asp-route-gameId="@game.Id"
+                                       class="btn btn-danger btn-sm">
+                                       Remove
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+                        </tbody>
+
+                    </table>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>

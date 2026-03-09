@@ -29,6 +29,9 @@
                             <li class="nav-item">
                                 <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Games" ? "active" : "")" href="/Games">Games</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Wishlist" ? "active" : "")" href="/Wishlist">My Wishlist</a>
+                            </li>
                         }
                     </ul>
                     <div class="ms-auto">

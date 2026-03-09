@@ -30,7 +30,9 @@ namespace TechWorld.Web
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<IRepository, Repository>();
+
             builder.Services.AddScoped<IGameService, GameService>();
+            builder.Services.AddScoped<IWishlistService, WishlistService>();
 
             var app = builder.Build();
 
