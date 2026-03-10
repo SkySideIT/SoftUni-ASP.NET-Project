@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<WishlistViewModel>
 
+@{
+    ViewData["Title"] = "My Wishlist";
+}
+
 <div class="container mt-5">
     <div class="d-flex justify-content-center">
         <div class="card shadow-sm border-0" style="width: 100%; max-width: 1000px; background-color: #FFC300">
@@ -53,12 +57,17 @@
                                                 Details
                                             </a>
 
-                                            <a asp-controller="Wishlist"
-                                               asp-action="Remove"
-                                               asp-route-gameId="@game.Id"
-                                               class="btn btn-danger btn-sm">
-                                                Remove
-                                            </a>
+                                            <form asp-controller="Wishlist"
+                                                  asp-action="Remove"
+                                                  method="post"
+                                                  class="d-inline">
+
+                                                <input type="hidden" name="gameId" value="@game.Id" />
+
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    Remove
+                                                </button>
+                                            </form>
 
                                         </div>
 

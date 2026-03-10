@@ -11,7 +11,7 @@ namespace TechWorld.Services.Core.Interfaces
     public interface IWishlistService
     {
         Task AddAsync(string userId, Guid gameId);
-        //Task RemoveAsync(string userId, int gameId);
+        Task RemoveAsync(string userId, Guid gameId);
         Task<IEnumerable<WishlistViewModel?>> GetUserWishlistByIdAsync(string userId);
         Task<bool> ExistsAsync(string userId, Guid gameId);
     }

@@ -79,6 +79,29 @@ namespace TechWorld.Services.Core
             await _repository.SaveChangesAsync();
         }
 
+        public async Task RemoveAsync(string userId, Guid gameId)
+        {
+            bool gameExists = await _repository.GetByIdAsync<Game>(gameId) != null;
+
+            if (!gameExists)
+            {
+                throw new EntityNotFoundException("Game not found.");
+            }
+
+            var userGame = await _repository.GetSingleAsync<UserGame>
+            (
+                ug => ug.UserId == userId && ug.GameId == gameId
+            );
+
+            if (userGame == null)
+            {
+                throw new EntityNotFoundException("Game is not in wishlist.");
+            }
+
+            _repository.Delete(userGame);
+            await _repository.SaveChangesAsync();
+        }
+
         public async Task<bool> ExistsAsync(string userId, Guid gameId)
         {
             var entity = await _repository.GetSingleAsync<UserGame>

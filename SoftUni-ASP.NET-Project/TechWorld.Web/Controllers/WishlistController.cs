@@ -55,5 +55,27 @@ namespace TechWorld.Web.Controllers
 
             return RedirectToAction("Index", "Wishlist");
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Remove(Guid gameId)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            try
+            {
+                await _wishlistService.RemoveAsync(userId, gameId);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "An error occurred while removing the game from the wishlist. Please try again later.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
