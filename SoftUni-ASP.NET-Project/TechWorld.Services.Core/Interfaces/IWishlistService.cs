@@ -12,7 +12,7 @@ namespace TechWorld.Services.Core.Interfaces
     {
         Task AddAsync(string userId, Guid gameId);
         //Task RemoveAsync(string userId, int gameId);
-        Task<IEnumerable<GameDetailsViewModel?>> GetUserWishlistByIdAsync(string userId);
+        Task<IEnumerable<WishlistViewModel?>> GetUserWishlistByIdAsync(string userId);
         Task<bool> ExistsAsync(string userId, Guid gameId);
     }
 }

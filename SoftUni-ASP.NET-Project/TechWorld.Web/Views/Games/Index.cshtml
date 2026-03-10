@@ -14,7 +14,7 @@
 <section class="container py-5">
     <div class="d-flex justify-content-center mb-4">
         <a asp-action="Create"
-           class="btn btn-warning btn-lg px-5 fw-semibold shadow mb-3">
+        class="btn btn-warning btn-lg px-5 fw-semibold shadow mb-3">
             <strong class="fs-4">Add New Game</strong>
         </a>
     </div>
@@ -36,9 +36,16 @@
                             <li class="list-group-item"><strong>Release Date:</strong> @game.ReleaseDate.ToString("yyyy-MM-dd")</li>
                             <li class="list-group-item"><strong>Price:</strong> $@game.Price.ToString("F2")</li>
                         </ul>
-                        <a asp-controller="Wishlist" asp-action="Add" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
-                            ❤️ Add to Wishlist
-                        </a>
+                        @if (!game.InWishlist)
+                        {
+                            <a asp-controller="Wishlist" asp-action="Add" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
+                                ⭐ Add to Wishlist
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning" style="color: black">✅ In Wishlist</span>
+                        }
                         <hr />
                         <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
                             Edit

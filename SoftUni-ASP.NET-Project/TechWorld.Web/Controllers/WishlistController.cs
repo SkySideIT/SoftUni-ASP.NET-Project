@@ -22,7 +22,7 @@ namespace TechWorld.Web.Controllers
         public async Task<IActionResult> Index()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-            IEnumerable<GameDetailsViewModel?> viewModel = await _wishlistService.GetUserWishlistByIdAsync(userId);
+            IEnumerable<WishlistViewModel?> viewModel = await _wishlistService.GetUserWishlistByIdAsync(userId);
 
             return View(viewModel);
         }

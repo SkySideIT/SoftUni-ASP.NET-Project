@@ -19,7 +19,7 @@ namespace TechWorld.Services.Core
             _repository = repository;
         }
 
-        public async Task<IEnumerable<GameDetailsViewModel?>> CreateAllGamesDetailsViewModelAsync()
+        public async Task<IEnumerable<GameDetailsViewModel?>> AllGamesDetailsViewModelAsync(string? userId = null)
         {
             var allGames = await _repository
                 .GetAllAsync<Game>
@@ -30,9 +30,14 @@ namespace TechWorld.Services.Core
                     g => g.Publisher
                 );
 
-            if (allGames == null)
+            HashSet<Guid> wishlistIds = new();
+
+            if (!string.IsNullOrEmpty(userId))
             {
-                return null!;
+                var userGames = await _repository.GetAllAsync<UserGame>(x => x.UserId == userId);
+                wishlistIds = userGames
+                    .Select(x => x.GameId)
+                    .ToHashSet();
             }
 
             var viewModel = allGames.Select(g => new GameDetailsViewModel
@@ -45,7 +50,8 @@ namespace TechWorld.Services.Core
                 Platform = g.Platform.Name,
                 Publisher = g.Publisher.Name,
                 ReleaseDate = g.ReleaseDate,
-                ImageUrl = g.ImageUrl!
+                ImageUrl = g.ImageUrl!,
+                InWishlist = wishlistIds.Contains(g.Id)
             });
 
             return viewModel;

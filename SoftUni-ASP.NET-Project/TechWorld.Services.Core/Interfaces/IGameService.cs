@@ -21,7 +21,7 @@ namespace TechWorld.Services.Core.Interfaces
         Task CreateGameAsync(GameCreateEditInputModel model);
         Task EditGameAsync(Guid id, GameCreateEditInputModel model);
         Task<GameDetailsViewModel?> GameDetailsViewModelAsync(Guid id);
-        Task<IEnumerable<GameDetailsViewModel?>> CreateAllGamesDetailsViewModelAsync();
+        Task<IEnumerable<GameDetailsViewModel?>> AllGamesDetailsViewModelAsync(string? userId = null);
         Task<GameCreateEditInputModel?> CreateGameViewModel();
         Task<GameCreateEditInputModel?> EditGameViewModel(Guid id);
         Task DeleteGameAsync(Guid id);

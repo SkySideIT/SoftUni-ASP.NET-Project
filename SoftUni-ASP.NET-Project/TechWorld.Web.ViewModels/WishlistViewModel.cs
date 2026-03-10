@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TechWorld.Web.ViewModels
 {
-    public class GameDetailsViewModel
+    public class WishlistViewModel
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = null!;
@@ -17,6 +17,5 @@ namespace TechWorld.Web.ViewModels
         public string Publisher { get; set; } = null!;
         public DateOnly ReleaseDate { get; set; }
         public string? ImageUrl { get; set; }
-        public bool InWishlist { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace TechWorld.Services.Core
             _repository = repository;
         }
 
-        public async Task<IEnumerable<GameDetailsViewModel?>> GetUserWishlistByIdAsync(string userId)
+        public async Task<IEnumerable<WishlistViewModel?>> GetUserWishlistByIdAsync(string userId)
         {
             var userGames = await _repository
                 .GetAllAsync<UserGame>
@@ -38,7 +38,7 @@ namespace TechWorld.Services.Core
                 return null!;
             }
 
-            var viewModel = userGames.Select(x => new GameDetailsViewModel
+            var viewModel = userGames.Select(x => new WishlistViewModel
             {
                 Id = x.Game.Id,
                 Title = x.Game.Title,

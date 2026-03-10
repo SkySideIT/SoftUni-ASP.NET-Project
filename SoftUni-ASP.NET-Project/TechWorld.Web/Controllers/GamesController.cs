@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
@@ -18,7 +19,9 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<GameDetailsViewModel?> viewModel = await _gameService.CreateAllGamesDetailsViewModelAsync();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var viewModel = await _gameService.AllGamesDetailsViewModelAsync(userId);
 
             if (viewModel == null)
             {
