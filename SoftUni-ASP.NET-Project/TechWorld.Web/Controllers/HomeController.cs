@@ -34,9 +34,25 @@ namespace TechWorld.Web.Controllers
             return View(viewModel);
         }
 
+        [Route("/Home/Error/{statusCode}")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int statusCode)
         {
+            if (statusCode == StatusCodes.Status400BadRequest)
+            {
+                return View("BadRequest");
+            }
+
+            if (statusCode == StatusCodes.Status404NotFound)
+            {
+                return View("NotFound");
+            }
+
+            if (statusCode == StatusCodes.Status500InternalServerError)
+            {
+                return View("InternalServerError");
+            }
+
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
