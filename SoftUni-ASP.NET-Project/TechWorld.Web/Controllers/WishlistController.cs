@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechWorld.GCommon.Exceptions;
-using TechWorld.Services.Core;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
 
@@ -21,17 +20,18 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            Guid userId = GetUserId(User);
             IEnumerable<WishlistViewModel?> viewModel = await _wishlistService.GetUserWishlistByIdAsync(userId);
 
             return View(viewModel);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Add([FromRoute(Name = "id")]Guid gameId)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add(Guid gameId)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            Guid userId = GetUserId(User);
 
             try
             {
@@ -58,9 +58,10 @@ namespace TechWorld.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Remove(Guid gameId)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            Guid userId = GetUserId(User);
 
             try
             {
@@ -76,6 +77,11 @@ namespace TechWorld.Web.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public static Guid GetUserId(ClaimsPrincipal user)
+        {
+            return Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
         }
     }
 }

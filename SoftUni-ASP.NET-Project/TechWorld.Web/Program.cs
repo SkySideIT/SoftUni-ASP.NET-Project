@@ -5,6 +5,7 @@ using TechWorld.Data.Common.Interfaces;
 using TechWorld.Data.Common;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Services.Core;
+using TechWorld.Data.Models;
 
 namespace TechWorld.Web
 {
@@ -21,10 +22,11 @@ namespace TechWorld.Web
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<ApplicationUser>(options =>
                 {
                     ConfigureIdentity(options);
                 })
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddControllersWithViews();

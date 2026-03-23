@@ -21,7 +21,7 @@ namespace TechWorld.Services.Core
             _repository = repository;
         }
 
-        public async Task<IEnumerable<WishlistViewModel?>> GetUserWishlistByIdAsync(string userId)
+        public async Task<IEnumerable<WishlistViewModel?>> GetUserWishlistByIdAsync(Guid userId)
         {
             var userGames = await _repository
                 .GetAllAsync<UserGame>
@@ -53,7 +53,7 @@ namespace TechWorld.Services.Core
             return viewModel;
         }
 
-        public async Task AddAsync(string userId, Guid gameId)
+        public async Task AddAsync(Guid userId, Guid gameId)
         {
             bool exists = await ExistsAsync(userId, gameId);
 
@@ -79,7 +79,7 @@ namespace TechWorld.Services.Core
             await _repository.SaveChangesAsync();
         }
 
-        public async Task RemoveAsync(string userId, Guid gameId)
+        public async Task RemoveAsync(Guid userId, Guid gameId)
         {
             bool gameExists = await _repository.GetByIdAsync<Game>(gameId) != null;
 
@@ -102,11 +102,11 @@ namespace TechWorld.Services.Core
             await _repository.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistsAsync(string userId, Guid gameId)
+        public async Task<bool> ExistsAsync(Guid userId, Guid gameId)
         {
             var entity = await _repository.GetSingleAsync<UserGame>
             (
-                x => x.UserId.ToLower() == userId.ToLower() && x.GameId == gameId
+                x => x.UserId == userId && x.GameId == gameId
             );
 
             return entity != null;

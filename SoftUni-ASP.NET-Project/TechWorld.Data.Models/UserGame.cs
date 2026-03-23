@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace TechWorld.Data.Models
@@ -8,8 +7,8 @@ namespace TechWorld.Data.Models
     public class UserGame
     {
         [ForeignKey(nameof(User))]
-        public string UserId { get; set; } = null!;
-        public virtual IdentityUser User { get; set; } = null!;
+        public Guid UserId { get; set; }
+        public virtual ApplicationUser User { get; set; } = null!;
 
         [ForeignKey(nameof(Game))]
         public Guid GameId { get; set; }

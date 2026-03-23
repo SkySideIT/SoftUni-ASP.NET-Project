@@ -34,7 +34,7 @@ namespace TechWorld.Services.Core
 
             if (!string.IsNullOrEmpty(userId))
             {
-                var userGames = await _repository.GetAllAsync<UserGame>(x => x.UserId == userId);
+                var userGames = await _repository.GetAllAsync<UserGame>(x => x.UserId.ToString() == userId);
                 wishlistIds = userGames
                     .Select(x => x.GameId)
                     .ToHashSet();

@@ -38,9 +38,10 @@
                         </ul>
                         @if (!game.InWishlist)
                         {
-                            <a asp-controller="Wishlist" asp-action="Add" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
-                                ⭐ Add to Wishlist
-                            </a>
+                            <form asp-controller="Wishlist" asp-action="Add" method="post">
+                                <input type="hidden" name="gameId" value="@game.Id" />
+                                <button class="btn btn-primary mt-auto w-100">⭐ Add to Wishlist</button>
+                            </form>
                         }
                         else
                         {

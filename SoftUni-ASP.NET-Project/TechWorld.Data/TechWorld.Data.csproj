@@ -18,4 +18,8 @@
     <ProjectReference Include="..\TechWorld.GCommon\TechWorld.GCommon.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
