@@ -6,6 +6,9 @@ using TechWorld.Data.Common;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Services.Core;
 using TechWorld.Data.Models;
+using System.Security.Principal;
+using TechWorld.Data.Seeding.Interfaces;
+using TechWorld.Data.Seeding;
 
 namespace TechWorld.Web
 {
@@ -35,8 +38,15 @@ namespace TechWorld.Web
 
             builder.Services.AddScoped<IGameService, GameService>();
             builder.Services.AddScoped<IWishlistService, WishlistService>();
+            builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var seeder = scope.ServiceProvider.GetRequiredService<IIdentitySeeder>();
+                seeder.SeedAsync().GetAwaiter().GetResult();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
