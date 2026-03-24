@@ -1,0 +1,80 @@
+﻿@model IEnumerable<GameDetailsViewModel>
+
+@{
+    ViewData["Title"] = "Game Management";
+}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><strong>Game Management</strong></h2>
+
+        <a asp-area="Admin"
+           asp-controller="Home"
+           asp-action="Create"
+           class="btn btn-success">
+            ✚ Add New Game
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Platform</th>
+						<th>Publisher</th>
+						<th>Release Date</th>
+                        <th>Price</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var game in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@game.ImageUrl"
+                                     style="width: 100px; height: 60px; object-fit: cover;" />
+                            </td>
+
+                            <td>@game.Title</td>
+                            <td>@game.Genre</td>
+                            <td>@game.Platform</td>
+                            <td>@game.Publisher</td>
+                            <td>@game.ReleaseDate.ToString("dd-MM-yyyy")</td>
+                            <td>$@game.Price</td>
+
+                            <td class="text-end">
+                                <a asp-area="Admin"
+                                   asp-controller="Home"
+                                   asp-action="Edit"
+                                   asp-route-id="@game.Id"
+                                   class="btn btn-warning btn-sm me-2">
+                                    ✎ Edit
+                                </a>
+
+                                <a asp-area="Admin"
+                                   asp-controller="Home"
+                                   asp-action="Delete"
+                                   asp-route-id="@game.Id"
+                                   class="btn btn-danger btn-sm">
+                                    🗑 Delete
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using TechWorld.GCommon
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,26 +13,44 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a href="/">
-                    <img src="~/logo.png" alt="Alternate Text" width="120" height="120" />
-                </a>
+                @if (User.IsInRole(ApplicationConstants.AdminRole))
+                {
+                    <a>
+                        <img src="~/logo.png" alt="Alternate Text" width="120" height="120" />
+                    </a>
+                }
+                else
+                {
+                    <a href="/">
+                        <img src="~/logo.png" alt="Alternate Text" width="120" height="120" />
+                    </a>
+                }
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse" id="navbarNav">
                     <ul class="nav navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" href="/">Home</a>
-                        </li>
-                        @if (User.Identity!.IsAuthenticated)
+                        @if (User.IsInRole(ApplicationConstants.AdminRole))
                         {
                             <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Games" ? "active" : "")" href="/Games">Games</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" href="/Admin">Game Management</a>
                             </li>
+                        }
+                        else
+                        {
                             <li class="nav-item">
-                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Wishlist" ? "active" : "")" href="/Wishlist">My Wishlist</a>
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" href="/">Home</a>
                             </li>
+                            @if (User.Identity!.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Games" ? "active" : "")" href="/Games">Games</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Wishlist" ? "active" : "")" href="/Wishlist">My Wishlist</a>
+                                </li>
+                            }
                         }
                     </ul>
                     <div class="ms-auto">

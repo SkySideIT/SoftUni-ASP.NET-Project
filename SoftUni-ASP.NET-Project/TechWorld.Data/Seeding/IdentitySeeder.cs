@@ -41,7 +41,7 @@ namespace TechWorld.Data.Seeding
         private async Task SeedAdminAsync()
         {
             string adminEmail = "admin@techworld.com";
-            string password = "аdmin123";
+            string password = "admin123";
 
             var user = await _userManager.FindByEmailAsync(adminEmail);
 

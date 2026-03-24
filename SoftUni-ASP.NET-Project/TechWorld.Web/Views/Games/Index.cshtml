@@ -6,18 +6,13 @@
 
 <section class="py-5" style="background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);">
     <div class="container">
-        <h1 class="display-4 fw-bold text-center text-white mb-4">Browse Games</h1>
+        <h1 class="display-4 fw-bold text-center mb-4" style="color: #ffc107">Browse Games</h1>
         <p class="lead text-center text-white mb-5">Explore our collection of the latest and greatest games!</p>
     </div>
 </section>
 
 <section class="container py-5">
-    <div class="d-flex justify-content-center mb-4">
-        <a asp-action="Create"
-        class="btn btn-warning btn-lg px-5 fw-semibold shadow mb-3">
-            <strong class="fs-4">Add New Game</strong>
-        </a>
-    </div>
+
     <div class="row g-4">
         @foreach (var game in Model)
         {
@@ -47,14 +42,6 @@
                         {
                             <span class="badge bg-warning" style="color: black">✅ In Wishlist</span>
                         }
-                        <hr />
-                        <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
-                            Edit
-                        </a>
-                        <hr />
-                        <a asp-action="Delete" asp-route-id="@game.Id" class="btn btn-primary mt-auto w-100">
-                            Delete
-                        </a>
                     </div>
                 </div>
             </div>

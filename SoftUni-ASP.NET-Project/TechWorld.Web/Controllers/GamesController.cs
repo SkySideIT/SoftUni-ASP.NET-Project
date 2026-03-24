@@ -45,127 +45,127 @@ namespace TechWorld.Web.Controllers
             return View(gameModel);
         }
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> Create()
-        {
-            GameCreateEditInputModel? model = await _gameService.CreateGameViewModel();
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<IActionResult> Create()
+        //{
+        //    GameCreateEditInputModel? model = await _gameService.CreateGameViewModel();
 
-            if (model == null)
-            {
-                return NotFound();
-            }
+        //    if (model == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Create(GameCreateEditInputModel model)
-        {
-            bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState, false);
-            if (!ModelState.IsValid || !isValid)
-            {
-                model.Genres = await _gameService.GetAllGenresAsync();
-                model.Platforms = await _gameService.GetAllPlatformsAsync();
+        //[HttpPost]
+        //[Authorize]
+        //public async Task<IActionResult> Create(GameCreateEditInputModel model)
+        //{
+        //    bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState, false);
+        //    if (!ModelState.IsValid || !isValid)
+        //    {
+        //        model.Genres = await _gameService.GetAllGenresAsync();
+        //        model.Platforms = await _gameService.GetAllPlatformsAsync();
 
-                return View(model);
-            }
+        //        return View(model);
+        //    }
 
-            try
-            {
-                await _gameService.CreateGameAsync(model);
+        //    try
+        //    {
+        //        await _gameService.CreateGameAsync(model);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the game. Please try again later.");
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //        ModelState.AddModelError(string.Empty, "An error occurred while creating the game. Please try again later.");
 
-                return View(model);
-            }
-        }
+        //        return View(model);
+        //    }
+        //}
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> Edit(Guid id)
-        {
-            GameCreateEditInputModel? model = await _gameService.EditGameViewModel(id);
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<IActionResult> Edit(Guid id)
+        //{
+        //    GameCreateEditInputModel? model = await _gameService.EditGameViewModel(id);
 
-            if (model == null)
-            {
-                return NotFound();
-            }
+        //    if (model == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Edit([FromRoute] Guid id, GameCreateEditInputModel model)
-        {
-            bool gameExists = await _gameService.GameExists(id);
+        //[HttpPost]
+        //[Authorize]
+        //public async Task<IActionResult> Edit([FromRoute] Guid id, GameCreateEditInputModel model)
+        //{
+        //    bool gameExists = await _gameService.GameExists(id);
 
-            if (!gameExists)
-            {
-                return NotFound();
-            }
+        //    if (!gameExists)
+        //    {
+        //        return NotFound();
+        //    }
 
-            bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState, true);
-            if (!ModelState.IsValid || !isValid)
-            {
-                model.Genres = await _gameService.GetAllGenresAsync();
-                model.Platforms = await _gameService.GetAllPlatformsAsync();
+        //    bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState, true);
+        //    if (!ModelState.IsValid || !isValid)
+        //    {
+        //        model.Genres = await _gameService.GetAllGenresAsync();
+        //        model.Platforms = await _gameService.GetAllPlatformsAsync();
 
-                return View(model);
-            }
+        //        return View(model);
+        //    }
 
-            try
-            {
-                await _gameService.EditGameAsync(id, model);
+        //    try
+        //    {
+        //        await _gameService.EditGameAsync(id, model);
 
-                return Redirect(Url.Action("Details", "Games") + "/" + id);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                ModelState.AddModelError(string.Empty, "An error occurred while editing the game. Please try again later.");
+        //        return Redirect(Url.Action("Details", "Games") + "/" + id);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //        ModelState.AddModelError(string.Empty, "An error occurred while editing the game. Please try again later.");
 
-                return View(model);
-            }
-        }
+        //        return View(model);
+        //    }
+        //}
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            GameDetailsViewModel? game = await _gameService.GameDetailsViewModelAsync(id);
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    GameDetailsViewModel? game = await _gameService.GameDetailsViewModelAsync(id);
 
-            if (game == null)
-            {
-                return NotFound();
-            }
+        //    if (game == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(game);
-        }
+        //    return View(game);
+        //}
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            try
-            {
-                await _gameService.DeleteGameAsync(id);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+        //[HttpPost]
+        //[Authorize]
+        //public async Task<IActionResult> DeleteConfirmed(Guid id)
+        //{
+        //    try
+        //    {
+        //        await _gameService.DeleteGameAsync(id);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
 
-                return Redirect(Url.Action("Delete", "Games") + "/" + id);
-            }
+        //        return Redirect(Url.Action("Delete", "Games") + "/" + id);
+        //    }
 
-            return RedirectToAction(nameof(Index));
-        }
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }
