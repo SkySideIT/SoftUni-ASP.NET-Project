@@ -50,6 +50,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Wishlist" ? "active" : "")" href="/Wishlist">My Wishlist</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Cart" ? "active" : "")" href="/Cart">My Cart</a>
+                                </li>
                             }
                         }
                     </ul>

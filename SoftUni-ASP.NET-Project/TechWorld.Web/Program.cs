@@ -38,6 +38,7 @@ namespace TechWorld.Web
 
             builder.Services.AddScoped<IGameService, GameService>();
             builder.Services.AddScoped<IWishlistService, WishlistService>();
+            builder.Services.AddScoped<ICartService, CartService>();
             builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
 
             var app = builder.Build();

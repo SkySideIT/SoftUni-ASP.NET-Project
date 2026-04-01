@@ -15,7 +15,7 @@ namespace TechWorld.Web.ViewModels
         public string Genre { get; set; } = null!;
         public string Platform { get; set; } = null!;
         public string Publisher { get; set; } = null!;
-        public DateOnly ReleaseDate { get; set; }
         public string? ImageUrl { get; set; }
+        public bool InCart { get; set; }
     }
 }

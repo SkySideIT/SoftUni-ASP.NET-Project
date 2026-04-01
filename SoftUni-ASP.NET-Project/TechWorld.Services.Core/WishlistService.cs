@@ -23,6 +23,13 @@ namespace TechWorld.Services.Core
 
         public async Task<IEnumerable<WishlistViewModel?>> GetUserWishlistByIdAsync(Guid userId)
         {
+            bool userExists = (await _repository.GetByIdAsync<ApplicationUser>(userId)) != null;
+
+            if (!userExists)
+            {
+                throw new EntityNotFoundException("User not found.");
+            }
+
             var userGames = await _repository
                 .GetAllAsync<UserGame>
                 (
@@ -38,6 +45,17 @@ namespace TechWorld.Services.Core
                 return null!;
             }
 
+            HashSet<Guid> cartIds = new();
+
+            if (userId != Guid.Empty)
+            {
+                var userCart = await _repository.GetAllAsync<CartProduct>(x => x.UserId == userId);
+
+                cartIds = userCart
+                    .Select(x => x.GameId)
+                    .ToHashSet();
+            }
+
             var viewModel = userGames.Select(x => new WishlistViewModel
             {
                 Id = x.Game.Id,
@@ -47,7 +65,8 @@ namespace TechWorld.Services.Core
                 ImageUrl = x.Game.ImageUrl,
                 Genre = x.Game.Genre.Name,
                 Platform = x.Game.Platform.Name,
-                Publisher = x.Game.Publisher.Name
+                Publisher = x.Game.Publisher.Name,
+                InCart = cartIds.Contains(x.GameId)
             });
 
             return viewModel;
@@ -55,18 +74,25 @@ namespace TechWorld.Services.Core
 
         public async Task AddAsync(Guid userId, Guid gameId)
         {
-            bool exists = await ExistsAsync(userId, gameId);
-
-            if (exists)
-            {
-                throw new EntityAlreadyExistsException("Game is already in wishlist.");
-            }
-
             bool gameExists = await _repository.GetByIdAsync<Game>(gameId) != null;
 
             if (!gameExists)
             {
                 throw new EntityNotFoundException("Game not found.");
+            }
+
+            bool userExists = (await _repository.GetByIdAsync<ApplicationUser>(userId)) != null;
+
+            if (!userExists)
+            {
+                throw new EntityNotFoundException("User not found.");
+            }
+
+            bool exists = await ExistsAsync(userId, gameId);
+
+            if (exists)
+            {
+                throw new EntityAlreadyExistsException("Game is already in wishlist.");
             }
 
             UserGame entity = new UserGame
@@ -88,10 +114,18 @@ namespace TechWorld.Services.Core
                 throw new EntityNotFoundException("Game not found.");
             }
 
-            var userGame = await _repository.GetSingleAsync<UserGame>
-            (
-                ug => ug.UserId == userId && ug.GameId == gameId
-            );
+            bool userExists = (await _repository.GetByIdAsync<ApplicationUser>(userId)) != null;
+
+            if (!userExists)
+            {
+                throw new EntityNotFoundException("User not found.");
+            }
+
+            var userGame = await _repository
+                .GetSingleAsync<UserGame>
+                (
+                    ug => ug.UserId == userId && ug.GameId == gameId
+                );
 
             if (userGame == null)
             {

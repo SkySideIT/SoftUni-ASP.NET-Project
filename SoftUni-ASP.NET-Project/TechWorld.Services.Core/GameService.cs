@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TechWorld.Data.Common;
 using TechWorld.Data.Common.Interfaces;
 using TechWorld.Data.Models;
+using TechWorld.GCommon.Exceptions;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
 
@@ -35,7 +36,19 @@ namespace TechWorld.Services.Core
             if (!string.IsNullOrEmpty(userId))
             {
                 var userGames = await _repository.GetAllAsync<UserGame>(x => x.UserId.ToString() == userId);
+
                 wishlistIds = userGames
+                    .Select(x => x.GameId)
+                    .ToHashSet();
+            }
+
+            HashSet<Guid> cartIds = new();
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var userCart = await _repository.GetAllAsync<CartProduct>(x => x.UserId.ToString() == userId);
+
+                cartIds = userCart
                     .Select(x => x.GameId)
                     .ToHashSet();
             }
@@ -51,7 +64,8 @@ namespace TechWorld.Services.Core
                 Publisher = g.Publisher.Name,
                 ReleaseDate = g.ReleaseDate,
                 ImageUrl = g.ImageUrl!,
-                InWishlist = wishlistIds.Contains(g.Id)
+                InWishlist = wishlistIds.Contains(g.Id),
+                InCart = cartIds.Contains(g.Id)
             });
 
             return viewModel;
@@ -94,7 +108,7 @@ namespace TechWorld.Services.Core
 
             if (game == null)
             {
-                return null!;
+                throw new EntityNotFoundException("Game not found.");
             }
 
             var gameModel = new GameDetailsViewModel
@@ -136,7 +150,7 @@ namespace TechWorld.Services.Core
 
             if (game == null)
             {
-                throw new InvalidOperationException("Game not found.");
+                throw new EntityNotFoundException("Game not found.");
             }
 
             Publisher publisher = game.Publisher;
@@ -164,6 +178,11 @@ namespace TechWorld.Services.Core
                     g => g.Platform,
                     g => g.Publisher
                 );
+
+            if (game == null)
+            {
+                throw new EntityNotFoundException("Game not found.");
+            }
 
             Publisher oldPublisher = game!.Publisher;
 
@@ -205,6 +224,11 @@ namespace TechWorld.Services.Core
                 g => g.Id == id,
                 g => g.Publisher
             );
+
+            if (game == null)
+            {
+                throw new EntityNotFoundException("Game not found.");
+            }
 
             GameCreateEditInputModel viewModel = new GameCreateEditInputModel
             {

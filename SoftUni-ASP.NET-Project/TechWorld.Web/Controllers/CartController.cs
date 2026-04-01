@@ -3,17 +3,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechWorld.GCommon.Exceptions;
 using TechWorld.Services.Core.Interfaces;
-using TechWorld.Web.ViewModels;
 
 namespace TechWorld.Web.Controllers
 {
-    public class WishlistController : Controller
+    public class CartController : Controller
     {
-        private readonly IWishlistService _wishlistService;
+        private readonly ICartService _cartService;
 
-        public WishlistController(IWishlistService wishlistService)
+        public CartController(ICartService cartService)
         {
-            _wishlistService = wishlistService;
+            _cartService = cartService;
         }
 
         [HttpGet]
@@ -21,9 +20,12 @@ namespace TechWorld.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = GetUserId(User);
-            IEnumerable<WishlistViewModel?> viewModel = await _wishlistService.GetUserWishlistByIdAsync(userId);
 
-            return View(viewModel);
+            var model = await _cartService.GetUserCartAsync(userId);
+
+            ViewBag.Total = model.Sum(x => x.Price);
+
+            return View(model);
         }
 
         [HttpPost]
@@ -32,10 +34,10 @@ namespace TechWorld.Web.Controllers
         public async Task<IActionResult> Add(Guid gameId)
         {
             var userId = GetUserId(User);
-
+            
             try
             {
-                await _wishlistService.AddAsync(userId, gameId);
+                await _cartService.AddAsync(userId, gameId);
             }
             catch (EntityNotFoundException ex)
             {
@@ -49,11 +51,11 @@ namespace TechWorld.Web.Controllers
             }
             catch (Exception)
             {
-                TempData["ErrorMessage"] = "An error occurred while adding the game to the wishlist. Please try again later.";
+                TempData["ErrorMessage"] = "An error occurred while adding the game to the cart. Please try again later.";
                 return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToAction("Index", "Wishlist");
+            return RedirectToAction("Index", "Cart");
         }
 
         [HttpPost]
@@ -65,7 +67,7 @@ namespace TechWorld.Web.Controllers
 
             try
             {
-                await _wishlistService.RemoveAsync(userId, gameId);
+                await _cartService.RemoveAsync(userId, gameId);
             }
             catch (EntityNotFoundException ex)
             {
@@ -73,8 +75,29 @@ namespace TechWorld.Web.Controllers
             }
             catch (Exception)
             {
-                TempData["ErrorMessage"] = "An error occurred while removing the game from the wishlist. Please try again later.";
+                TempData["ErrorMessage"] = "An error occurred while removing the game from the cart. Please try again later.";
             }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Purchase()
+        {
+            var userId = GetUserId(User);
+
+            try
+            {
+                await _cartService.ClearCartAsync(userId);
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "An error occurred while finalizing the deal. Please try again later.";
+            }
+
+            TempData["SuccessMessage"] = "Congratulations! Your order was successful 🎉";
 
             return RedirectToAction(nameof(Index));
         }

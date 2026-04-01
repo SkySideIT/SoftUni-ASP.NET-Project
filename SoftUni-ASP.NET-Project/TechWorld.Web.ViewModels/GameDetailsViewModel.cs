@@ -18,5 +18,6 @@ namespace TechWorld.Web.ViewModels
         public DateOnly ReleaseDate { get; set; }
         public string? ImageUrl { get; set; }
         public bool InWishlist { get; set; }
+        public bool InCart { get; set; }
     }
 }

@@ -42,6 +42,23 @@
                         {
                             <span class="badge bg-warning" style="color: black">✅ In Wishlist</span>
                         }
+
+                        <hr />
+
+                        @if (!game.InCart)
+                        {
+                            <form asp-controller="Cart" asp-action="Add" method="post">
+                                <input type="hidden" name="gameId" value="@game.Id" />
+                                <button type="submit" class="btn btn-success mt-auto w-100">Put in Cart</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary" disabled>
+                                Already in Cart
+                            </button>
+                        }
+                        
                     </div>
                 </div>
             </div>

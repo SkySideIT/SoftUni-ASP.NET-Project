@@ -2,11 +2,11 @@
 
 namespace TechWorld.Services.Core.Interfaces
 {
-    public interface IWishlistService
+    public interface ICartService
     {
         Task AddAsync(Guid userId, Guid gameId);
         Task RemoveAsync(Guid userId, Guid gameId);
-        Task<IEnumerable<WishlistViewModel?>> GetUserWishlistByIdAsync(Guid userId);
-        Task<bool> ExistsAsync(Guid userId, Guid gameId);
+        Task<IEnumerable<CartViewModel?>> GetUserCartAsync(Guid userId);
+        Task ClearCartAsync(Guid userId);
     }
 }
