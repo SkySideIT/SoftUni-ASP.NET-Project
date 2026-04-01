@@ -21,6 +21,12 @@ namespace TechWorld.Data.Seeding
             _userManager = userManager;
         }
 
+        public async Task SeedAsync()
+        {
+            await SeedRolesAsync();
+            await SeedAdminAsync();
+        }
+
         private async Task SeedRolesAsync()
         {
             string[] roles =
@@ -57,12 +63,6 @@ namespace TechWorld.Data.Seeding
 
                 await _userManager.AddToRoleAsync(admin, ApplicationConstants.AdminRole);
             }
-        }
-
-        public async Task SeedAsync()
-        {
-            await SeedRolesAsync();
-            await SeedAdminAsync();
         }
     }
 }

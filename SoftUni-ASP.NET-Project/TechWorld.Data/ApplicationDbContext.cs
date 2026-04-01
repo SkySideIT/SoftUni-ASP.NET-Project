@@ -19,6 +19,7 @@ namespace TechWorld.Data
         public virtual DbSet<Publisher> Publishers { get; set; } = null!;
         public virtual DbSet<UserGame> UsersGames { get; set; } = null!;
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
+        public virtual DbSet<CartProduct> CartProducts{ get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
