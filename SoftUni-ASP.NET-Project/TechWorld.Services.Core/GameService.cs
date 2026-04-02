@@ -272,6 +272,87 @@ namespace TechWorld.Services.Core
                 );
         }
 
+        public async Task<GamesIndexViewModel> GetAllGamesAsync(string? userId = null, 
+            string? searchTerm = null, 
+            int? genreId = null, 
+            int? platformId = null)
+        {
+            var games = await _repository
+                .GetAllAsync<Game>
+                (
+                    g => true,
+                    g => g.Genre,
+                    g => g.Platform,
+                    g => g.Publisher
+                );
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                games = games.Where(g =>
+                    g.Title.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            if (genreId.HasValue)
+            {
+                games = games.Where(g => g.GenreId == genreId.Value);
+            }
+
+            if (platformId.HasValue)
+            {
+                games = games.Where(g => g.PlatformId == platformId.Value);
+            }
+
+            HashSet<Guid> wishlistIds = new();
+            HashSet<Guid> cartIds = new();
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var userWishlist = await _repository.GetAllAsync<UserGame>(x => x.UserId.ToString() == userId);
+                wishlistIds = userWishlist.Select(x => x.GameId).ToHashSet();
+
+                var userCart = await _repository.GetAllAsync<CartProduct>(x => x.UserId.ToString() == userId);
+                cartIds = userCart.Select(x => x.GameId).ToHashSet();
+            }
+
+            var gamesViewModel = games.Select(g => new GameDetailsViewModel
+            {
+                Id = g.Id,
+                Title = g.Title,
+                Description = g.Description,
+                ImageUrl = g.ImageUrl,
+                Price = g.Price,
+                GenreId = g.GenreId,
+                Genre = g.Genre.Name,
+                PlatformId = g.PlatformId,
+                Platform = g.Platform.Name,
+                Publisher = g.Publisher.Name,
+                ReleaseDate = g.ReleaseDate,
+                InWishlist = wishlistIds.Contains(g.Id),
+                InCart = cartIds.Contains(g.Id)
+            });
+
+            var genres = await _repository.GetAllAsync<Genre>();
+            var genreViewModels = genres.Select(g => new SelectGameGenreViewModel
+            {
+                Id = g.Id,
+                Name = g.Name
+            });
+
+            var platforms = await _repository.GetAllAsync<Platform>();
+            var platformViewModels = platforms.Select(p => new SelectGamePlatformViewModel
+            {
+                Id = p.Id,
+                Name = p.Name
+            });
+
+            return new GamesIndexViewModel
+            {
+                Games = gamesViewModel,
+                Genres = genreViewModels,
+                Platforms = platformViewModels,
+            };
+        }
+
         public async Task<IEnumerable<SelectGameGenreViewModel>> GetAllGenresAsync()
         {
             var genres = await _repository.GetAllAsync<Genre>();

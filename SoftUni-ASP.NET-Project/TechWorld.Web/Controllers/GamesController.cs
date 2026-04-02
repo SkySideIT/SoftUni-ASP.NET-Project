@@ -1,6 +1,8 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TechWorld.Data.Models;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
 
@@ -17,18 +19,13 @@ namespace TechWorld.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchTerm, int? genreId, int? platformId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var viewModel = await _gameService.AllGamesDetailsViewModelAsync(userId);
+            var games = await _gameService.GetAllGamesAsync(userId, searchTerm, genreId, platformId);
 
-            if (viewModel == null)
-            {
-                return NotFound();
-            }
-
-            return View(viewModel);
+            return View(games);
         }
 
         [HttpGet]

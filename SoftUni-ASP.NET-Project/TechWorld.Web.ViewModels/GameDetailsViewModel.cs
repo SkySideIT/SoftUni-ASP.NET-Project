@@ -12,7 +12,9 @@ namespace TechWorld.Web.ViewModels
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public decimal Price { get; set; }
+        public int GenreId { get; set; }
         public string Genre { get; set; } = null!;
+        public int PlatformId { get; set; }
         public string Platform { get; set; } = null!;
         public string Publisher { get; set; } = null!;
         public DateOnly ReleaseDate { get; set; }
