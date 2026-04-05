@@ -36,12 +36,7 @@ namespace TechWorld.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Details(Guid id)
         {
-            GameDetailsViewModel? gameModel = await _gameService.GameDetailsViewModelAsync(id);
-
-            if (gameModel == null)
-            {
-                return NotFound();
-            }
+            var gameModel = await _gameService.GameDetailsViewModelAsync(id);
 
             return View(gameModel);
         }

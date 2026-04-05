@@ -310,6 +310,7 @@ namespace TechWorld.Services.Core
             int totalGames = games.Count();
 
             var pagedGames = games
+                .OrderBy(g => g.Title)
                 .Skip((currentPage - 1) * pageSize)
                 .Take(pageSize);
 
@@ -409,10 +410,20 @@ namespace TechWorld.Services.Core
                 );
         }
 
-        public async Task<IEnumerable<Game>> GetLatestGamesAsync(int count)
+        public async Task<IEnumerable<LatestGamesCardViewModel?>> GetLatestGamesAsync(int count)
         {
-            var allGames = await _repository.GetAllAsync<Game>();
-            return allGames.OrderByDescending(g => g.ReleaseDate).Take(count);
+            var allGames = (await _repository.GetAllAsync<Game>()).OrderByDescending(g => g.ReleaseDate).Take(count);
+
+            var viewModel = allGames
+                .Select(g => new LatestGamesCardViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    Description = g.Description,
+                    ImageUrl = g.ImageUrl!
+                });
+
+            return viewModel;
         }
 
         public async Task<bool> ValidateGameInputAsync(GameCreateEditInputModel model, ModelStateDictionary modelState, bool isEdit = false)
