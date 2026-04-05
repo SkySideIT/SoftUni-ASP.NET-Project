@@ -36,17 +36,18 @@ namespace TechWorld.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            GameCreateEditInputModel? model = await _gameService.CreateGameViewModel();
+            var viewModel = await _gameService.CreateGameViewModel();
 
-            if (model == null)
+            if (viewModel == null)
             {
                 return NotFound();
             }
 
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(GameCreateEditInputModel model)
         {
             bool isValid = await _gameService.ValidateGameInputAsync(model, ModelState, false);
@@ -76,7 +77,7 @@ namespace TechWorld.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            GameCreateEditInputModel? model = await _gameService.EditGameViewModel(id);
+            var model = await _gameService.EditGameViewModel(id);
 
             if (model == null)
             {
@@ -87,6 +88,7 @@ namespace TechWorld.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([FromRoute] Guid id, GameCreateEditInputModel model)
         {
             bool gameExists = await _gameService.GameExists(id);
@@ -123,7 +125,7 @@ namespace TechWorld.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            GameDetailsViewModel? game = await _gameService.GameDetailsViewModelAsync(id);
+            var game = await _gameService.GameDetailsViewModelAsync(id);
 
             if (game == null)
             {
@@ -134,6 +136,7 @@ namespace TechWorld.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             try

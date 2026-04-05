@@ -21,17 +21,8 @@ namespace TechWorld.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var latestGames = await _gameService.GetLatestGamesAsync(3);
-
-            var viewModel = latestGames
-                .Select(g => new LatestGamesCardViewModel
-                {
-                    Id = g.Id,
-                    Title = g.Title,
-                    Description = g.Description,
-                    ImageUrl = g.ImageUrl!
-                });
             
-            return View(viewModel);
+            return View(latestGames);
         }
 
         [Route("/Home/Error/{statusCode}")]

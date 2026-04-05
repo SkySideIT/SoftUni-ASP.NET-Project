@@ -21,7 +21,7 @@ namespace TechWorld.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = GetUserId(User);
-            IEnumerable<WishlistViewModel?> viewModel = await _wishlistService.GetUserWishlistByIdAsync(userId);
+            var viewModel = await _wishlistService.GetUserWishlistByIdAsync(userId);
 
             return View(viewModel);
         }

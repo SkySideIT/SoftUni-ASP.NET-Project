@@ -22,7 +22,7 @@ namespace TechWorld.Services.Core.Interfaces
                 int? genreId = null, 
                 int? platformId = null
             );
-        Task<IEnumerable<Game>> GetLatestGamesAsync(int count);
+        Task<IEnumerable<LatestGamesCardViewModel?>> GetLatestGamesAsync(int count);
         Task<Game?> GetGameByIdAsync(Guid id);
         Task<bool> GameExists(Guid id);
         Task<IEnumerable<SelectGameGenreViewModel>> GetAllGenresAsync();
