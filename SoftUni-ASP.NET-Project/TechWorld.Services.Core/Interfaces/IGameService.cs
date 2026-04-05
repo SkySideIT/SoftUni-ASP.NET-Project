@@ -13,10 +13,15 @@ namespace TechWorld.Services.Core.Interfaces
     public interface IGameService
     {
         Task<IEnumerable<Game>> GetAllGamesAsync();
-        Task<GamesIndexViewModel> GetAllGamesAsync(string? userId = null, 
-            string? searchTerm = null, 
-            int? genreId = null, 
-            int? platformId = null);
+        Task<GamesIndexViewModel> GetAllGamesAsync
+            (
+                int currentPage,
+                int pageSize,
+                string? userId = null, 
+                string? searchTerm = null, 
+                int? genreId = null, 
+                int? platformId = null
+            );
         Task<IEnumerable<Game>> GetLatestGamesAsync(int count);
         Task<Game?> GetGameByIdAsync(Guid id);
         Task<bool> GameExists(Guid id);

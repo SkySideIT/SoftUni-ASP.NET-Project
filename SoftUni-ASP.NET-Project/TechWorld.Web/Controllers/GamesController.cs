@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechWorld.Data.Models;
+using TechWorld.GCommon;
 using TechWorld.Services.Core.Interfaces;
 using TechWorld.Web.ViewModels;
 
@@ -19,11 +20,14 @@ namespace TechWorld.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Index(string? searchTerm, int? genreId, int? platformId)
+        public async Task<IActionResult> Index(string? searchTerm, int? genreId, int? platformId, 
+            int currentPage = ApplicationConstants.CurrentPage)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var games = await _gameService.GetAllGamesAsync(userId, searchTerm, genreId, platformId);
+            var pageSize = ApplicationConstants.PageSize;
+
+            var games = await _gameService.GetAllGamesAsync(currentPage, pageSize, userId, searchTerm, genreId, platformId);
 
             return View(games);
         }

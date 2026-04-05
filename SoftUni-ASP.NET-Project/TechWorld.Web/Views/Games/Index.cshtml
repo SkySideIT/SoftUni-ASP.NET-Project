@@ -32,7 +32,10 @@
 
 						@foreach (var genre in Model.Genres)
 						{
-							<option value="@genre.Id">@genre.Name</option>
+							<option value="@genre.Id"
+									selected="@(Model.GenreId == genre.Id ? "selected" : null)">
+								@genre.Name
+							</option>
 						}
 
 					</select>
@@ -44,7 +47,10 @@
 
 						@foreach (var platform in Model.Platforms)
 						{
-							<option value="@platform.Id">@platform.Name</option>
+							<option value="@platform.Id"
+									selected="@(Model.PlatformId == platform.Id ? "selected" : null)">
+								@platform.Name
+							</option>
 						}
 
 					</select>
@@ -109,4 +115,26 @@
 			</div>
 		}
 	</div>
+
+	<nav class="mt-4">
+		<ul class="pagination justify-content-center">
+
+			@for (int i = 1; i <= Model.TotalPages; i++)
+			{
+				<li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+					<a class="page-link"
+					   href="@Url.Action("Index", new {
+                       currentPage = i,
+                       searchTerm = Model.SearchTerm,
+                       genreId = Model.GenreId,
+                       platformId = Model.PlatformId
+                   })">
+						@i
+					</a>
+				</li>
+			}
+
+		</ul>
+	</nav>
+
 </section>

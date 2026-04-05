@@ -6,5 +6,8 @@
 
         public const string AdminRole = "Administrator";
         public const string UserRole = "User";
+
+        public const int PageSize = 3;
+        public const int CurrentPage = 1;
     }
 }

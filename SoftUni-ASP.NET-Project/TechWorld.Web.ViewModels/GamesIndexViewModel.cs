@@ -9,5 +9,8 @@
         public string? SearchTerm { get; set; }
         public int? GenreId { get; set; }
         public int? PlatformId { get; set; }
+
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
     }
 }

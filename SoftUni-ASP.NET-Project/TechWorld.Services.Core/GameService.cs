@@ -272,10 +272,15 @@ namespace TechWorld.Services.Core
                 );
         }
 
-        public async Task<GamesIndexViewModel> GetAllGamesAsync(string? userId = null, 
-            string? searchTerm = null, 
-            int? genreId = null, 
-            int? platformId = null)
+        public async Task<GamesIndexViewModel> GetAllGamesAsync
+            (
+                int currentPage,
+                int pageSize,
+                string? userId = null, 
+                string? searchTerm = null, 
+                int? genreId = null, 
+                int? platformId = null
+            )
         {
             var games = await _repository
                 .GetAllAsync<Game>
@@ -302,6 +307,12 @@ namespace TechWorld.Services.Core
                 games = games.Where(g => g.PlatformId == platformId.Value);
             }
 
+            int totalGames = games.Count();
+
+            var pagedGames = games
+                .Skip((currentPage - 1) * pageSize)
+                .Take(pageSize);
+
             HashSet<Guid> wishlistIds = new();
             HashSet<Guid> cartIds = new();
 
@@ -314,7 +325,7 @@ namespace TechWorld.Services.Core
                 cartIds = userCart.Select(x => x.GameId).ToHashSet();
             }
 
-            var gamesViewModel = games.Select(g => new GameDetailsViewModel
+            var gamesViewModel = pagedGames.Select(g => new GameDetailsViewModel
             {
                 Id = g.Id,
                 Title = g.Title,
@@ -350,6 +361,13 @@ namespace TechWorld.Services.Core
                 Games = gamesViewModel,
                 Genres = genreViewModels,
                 Platforms = platformViewModels,
+
+                SearchTerm = searchTerm,
+                GenreId = genreId,
+                PlatformId = platformId,
+
+                CurrentPage = currentPage,
+                TotalPages = (int)Math.Ceiling((double)totalGames / pageSize)
             };
         }
 
