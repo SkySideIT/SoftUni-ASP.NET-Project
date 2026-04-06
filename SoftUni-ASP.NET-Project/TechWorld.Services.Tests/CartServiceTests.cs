@@ -46,7 +46,7 @@ namespace TechWorld.Services.Tests
         }
 
         [Test]
-        public async Task AddAsync_GameAlreadyInCart_ThrowsException()
+        public void AddAsync_GameAlreadyInCart_ThrowsException()
         {
             _repositoryMock.Setup(r => r.GetByIdAsync<Game>(_gameId))
                 .ReturnsAsync(new Game());
@@ -63,7 +63,7 @@ namespace TechWorld.Services.Tests
         }
 
         [Test]
-        public async Task AddAsync_GameNotFound_ThrowsException()
+        public void AddAsync_GameNotFound_ThrowsException()
         {
             _repositoryMock.Setup(r => r.GetByIdAsync<Game>(_gameId))
                 .ReturnsAsync((Game?)null);
@@ -73,7 +73,7 @@ namespace TechWorld.Services.Tests
         }
 
         [Test]
-        public async Task AddAsync_UserNotFound_ThrowsException()
+        public void AddAsync_UserNotFound_ThrowsException()
         {
             _repositoryMock.Setup(r => r.GetByIdAsync<Game>(_gameId))
                 .ReturnsAsync(new Game());
@@ -106,7 +106,7 @@ namespace TechWorld.Services.Tests
         }
 
         [Test]
-        public async Task RemoveAsync_GameNotInCart_ThrowsException()
+        public void RemoveAsync_GameNotInCart_ThrowsException()
         {
             _repositoryMock.Setup(r => r.GetSingleAsync<CartProduct>(
                     It.IsAny<Expression<Func<CartProduct, bool>>>(),
