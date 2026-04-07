@@ -27,7 +27,7 @@ namespace TechWorld.Services.Tests
         }
 
         [Test]
-        public async Task AddAsync_ValidData_AddsCartProduct()
+        public async Task AddAsync_ValidData_ShouldAddCartProduct()
         {
             _repositoryMock.Setup(r => r.GetByIdAsync<Game>(_gameId))
                 .ReturnsAsync(new Game());
@@ -89,8 +89,8 @@ namespace TechWorld.Services.Tests
         public async Task RemoveAsync_GameInCart_ShouldDelete()
         {
             _repositoryMock.Setup(r => r.GetSingleAsync<CartProduct>(
-                    It.IsAny<Expression<Func<CartProduct, bool>>>(),
-                    It.IsAny<Expression<Func<CartProduct, object>>[]>()))
+                It.IsAny<Expression<Func<CartProduct, bool>>>(),
+                It.IsAny<Expression<Func<CartProduct, object>>[]>()))
                 .ReturnsAsync(new CartProduct());
 
             _repositoryMock.Setup(r => r.GetByIdAsync<Game>(_gameId))
@@ -109,8 +109,8 @@ namespace TechWorld.Services.Tests
         public void RemoveAsync_GameNotInCart_ThrowsException()
         {
             _repositoryMock.Setup(r => r.GetSingleAsync<CartProduct>(
-                    It.IsAny<Expression<Func<CartProduct, bool>>>(),
-                    It.IsAny<Expression<Func<CartProduct, object>>[]>()))
+                It.IsAny<Expression<Func<CartProduct, bool>>>(),
+                It.IsAny<Expression<Func<CartProduct, object>>[]>()))
                 .ReturnsAsync((CartProduct?)null);
 
             Assert.ThrowsAsync<EntityNotFoundException>(() =>
@@ -124,8 +124,8 @@ namespace TechWorld.Services.Tests
                 .ReturnsAsync(new ApplicationUser());
 
             _repositoryMock.Setup(r => r.GetAllAsync<CartProduct>(
-                    It.IsAny<Expression<Func<CartProduct, bool>>>(),
-                    It.IsAny<Expression<Func<CartProduct, object>>[]>()))
+                It.IsAny<Expression<Func<CartProduct, bool>>>(),
+                It.IsAny<Expression<Func<CartProduct, object>>[]>()))
                 .ReturnsAsync(new List<CartProduct>
                 {
                     new CartProduct
@@ -163,7 +163,7 @@ namespace TechWorld.Services.Tests
                 .ReturnsAsync(new ApplicationUser());
 
             _repositoryMock.Setup(r => r.GetAllAsync<CartProduct>(
-                    It.IsAny<Expression<Func<CartProduct, bool>>>()))
+                It.IsAny<Expression<Func<CartProduct, bool>>>()))
                 .ReturnsAsync(new List<CartProduct>
                 {
                     new CartProduct(),

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using Moq;
 using TechWorld.Data.Common.Interfaces;
 using TechWorld.Data.Models;
@@ -24,11 +19,10 @@ namespace TechWorld.Services.Tests
         [SetUp]
         public void Setup()
         {
-            _repositoryMock = new Mock<IRepository>();
-
             _userId = Guid.Parse("001994e4-75a5-4717-88f9-95cf0009fbf2");
             _gameId = Guid.Parse("17845c0e-4e0d-4c2e-98de-a50759c70ef5");
 
+            _repositoryMock = new Mock<IRepository>();
             _wishlistService = new WishlistService(_repositoryMock.Object);
         }
 
@@ -42,8 +36,8 @@ namespace TechWorld.Services.Tests
                 .ReturnsAsync(new ApplicationUser());
 
             _repositoryMock.Setup(r => r.GetSingleAsync<UserGame>(
-                    It.IsAny<Expression<Func<UserGame, bool>>>(),
-                    It.IsAny<Expression<Func<UserGame, object>>[]>()))
+                It.IsAny<Expression<Func<UserGame, bool>>>(),
+                It.IsAny<Expression<Func<UserGame, object>>[]>()))
                 .ReturnsAsync((UserGame?)null);
 
             await _wishlistService.AddAsync(_userId, _gameId);
@@ -85,8 +79,8 @@ namespace TechWorld.Services.Tests
                 .ReturnsAsync(new ApplicationUser());
 
             _repositoryMock.Setup(r => r.GetSingleAsync<UserGame>(
-                    It.IsAny<Expression<Func<UserGame, bool>>>(),
-                    It.IsAny<Expression<Func<UserGame, object>>[]>()))
+                 It.IsAny<Expression<Func<UserGame, bool>>>(),
+                 It.IsAny<Expression<Func<UserGame, object>>[]>()))
                 .ReturnsAsync(new UserGame());
 
             Assert.ThrowsAsync<EntityAlreadyExistsException>(() =>
@@ -103,8 +97,8 @@ namespace TechWorld.Services.Tests
                 .ReturnsAsync(new ApplicationUser());
 
             _repositoryMock.Setup(r => r.GetSingleAsync<UserGame>(
-                    It.IsAny<Expression<Func<UserGame, bool>>>(),
-                    It.IsAny<Expression<Func<UserGame, object>>[]>()))
+                It.IsAny<Expression<Func<UserGame, bool>>>(),
+                It.IsAny<Expression<Func<UserGame, object>>[]>()))
                 .ReturnsAsync(new UserGame());
 
             await _wishlistService.RemoveAsync(_userId, _gameId);
@@ -146,8 +140,8 @@ namespace TechWorld.Services.Tests
                 .ReturnsAsync(new ApplicationUser());
 
             _repositoryMock.Setup(r => r.GetSingleAsync<UserGame>(
-                    It.IsAny<Expression<Func<UserGame, bool>>>(),
-                    It.IsAny<Expression<Func<UserGame, object>>[]>()))
+                It.IsAny<Expression<Func<UserGame, bool>>>(),
+                It.IsAny<Expression<Func<UserGame, object>>[]>()))
                 .ReturnsAsync((UserGame?)null);
 
             Assert.ThrowsAsync<EntityNotFoundException>(() =>
@@ -158,8 +152,8 @@ namespace TechWorld.Services.Tests
         public async Task ExistsAsync_EntityExists_ReturnsTrue()
         {
             _repositoryMock.Setup(r => r.GetSingleAsync<UserGame>(
-                    It.IsAny<Expression<Func<UserGame, bool>>>(),
-                    It.IsAny<Expression<Func<UserGame, object>>[]>()))
+                It.IsAny<Expression<Func<UserGame, bool>>>(),
+                It.IsAny<Expression<Func<UserGame, object>>[]>()))
                 .ReturnsAsync(new UserGame());
 
             var result = await _wishlistService.ExistsAsync(_userId, _gameId);
@@ -171,8 +165,8 @@ namespace TechWorld.Services.Tests
         public async Task ExistsAsync_EntityNotFound_ReturnsFalse()
         {
             _repositoryMock.Setup(r => r.GetSingleAsync<UserGame>(
-                    It.IsAny<Expression<Func<UserGame, bool>>>(),
-                    It.IsAny<Expression<Func<UserGame, object>>[]>()))
+                It.IsAny<Expression<Func<UserGame, bool>>>(),
+                It.IsAny<Expression<Func<UserGame, object>>[]>()))
                 .ReturnsAsync((UserGame?)null);
 
             var result = await _wishlistService.ExistsAsync(_userId, _gameId);
@@ -187,8 +181,8 @@ namespace TechWorld.Services.Tests
                 .ReturnsAsync(new ApplicationUser());
 
             _repositoryMock.Setup(r => r.GetAllAsync<UserGame>(
-                    It.IsAny<Expression<Func<UserGame, bool>>>(),
-                    It.IsAny<Expression<Func<UserGame, object>>[]>()))
+                It.IsAny<Expression<Func<UserGame, bool>>>(),
+                It.IsAny<Expression<Func<UserGame, object>>[]>()))
                 .ReturnsAsync(new List<UserGame>
                 {
                     new UserGame
@@ -208,7 +202,7 @@ namespace TechWorld.Services.Tests
                 });
 
             _repositoryMock.Setup(r => r.GetAllAsync<CartProduct>(
-                    It.IsAny<Expression<Func<CartProduct, bool>>>()))
+                It.IsAny<Expression<Func<CartProduct, bool>>>()))
                 .ReturnsAsync(new List<CartProduct>());
 
             var result = await _wishlistService.GetUserWishlistByIdAsync(_userId);
