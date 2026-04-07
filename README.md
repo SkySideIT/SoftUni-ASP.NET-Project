@@ -1,65 +1,24 @@
-# 🎮 TechWorld – ASP.NET Core MVC Web Application
+# 🎮 Game Store Web Application
 
-**TechWorld** is a basic ASP.NET Core MVC web application designed as a simple online store for video games.  
-The project demonstrates the fundamental structure of a full-stack web application using clean architecture, Entity Framework Core, and SOLID principles.  
-It was created as part of a university assignment for the ASP.NET Core Basics course and serves as the foundation for a future Advanced ASP.NET project.
+## 📌 Project Overview
 
----
+Game Store is a full-stack ASP.NET Core MVC web application that allows users to browse, filter, and manage video games, as well as maintain a wishlist and shopping cart.
 
-## 🚀 Features
-
-- Full **MVC architecture** (Model–View–Controller)
-- **Entity Framework Core** with SQL Server database
-- **Repository + Service pattern** for clean separation of concerns
-- CRUD operations for the main entity: **Game**
-- **Server-side and client-side validation**
-- **Responsive design** using **Bootstrap 5**
-- **Razor Views** with Layout
-- **Dependency Injection** and SOLID OOP principles
-- **Default placeholder image** when a game has no cover
-- Automatic deletion of unused publishers (if no games reference them)
-- Clear navigation between all pages
-
----
-
-## 🧱 Entities
-
-The database contains four main entities:
-
-| Entity | Description |
-|---------|--------------|
-| **Game** | Main entity representing a video game. Includes title, description, price, image, release date, genre, platform, and publisher. |
-| **Genre** | Represents the category of the game (e.g. Action, Shooter, RPG). |
-| **Platform** | Represents the platform where the game is available (e.g. PC, PlayStation, Xbox). |
-| **Publisher** | Represents the company that published the game. Automatically deleted when no games reference it. |
-
----
-
-## 🧠 Architecture Overview
-
-- **Repository Layer:** Handles data access using EF Core.  
-- **Service Layer:** Contains business logic and validation.  
-- **Controller Layer:** Handles HTTP requests and orchestrates data between Service and View.  
-- **Views:** Razor pages for displaying data and forms.
-
----
-
-## 🛠️ Technologies Used
-
-| Category | Technologies |
-|-----------|---------------|
-| **Framework** | ASP.NET Core 8.0 MVC |
-| **Database** | Microsoft SQL Server |
-| **ORM** | Entity Framework Core |
-| **Frontend** | Razor, Bootstrap 5 |
-| **Language** | C# 10+ |
-| **Version Control** | Git / GitHub |
+The application demonstrates clean architecture, role-based access control, and full CRUD functionality, along with unit testing and user interaction features.
 
 ---
 
 ## ⚙️ Setup Instructions
 
-### 1️⃣ Configure the database connection
+1. Clone the repository:
+
+```bash
+git clone https://github.com/SkySideIT/SoftUni-ASP.NET-Project.git
+```
+
+2. Open in Visual Studio
+
+3. Configure the database connection
 
 Open appsettings.json and make sure the connection string points to your local SQL Server instance:
 
@@ -69,69 +28,273 @@ Open appsettings.json and make sure the connection string points to your local S
 }
 ```
 
----
-
-### 2️⃣ Apply migrations and seed the database
-
-In Visual Studio Package Manager Console, run:
+4. Apply migrations:
 
 ```
 Update-Database
 ```
 
-This will create the database and seed it with sample data.
-
----
-
-### 3️⃣ Run the application
+5. Run the application
 
 ```
 dotnet run
 ```
 
-or simply press F5 in Visual Studio.
+or simply press CTRL + F5 in Visual Studio.
 
 ---
 
-## 🧪 Default Data (Seed)
+## 🚀 Features
 
-When the project runs for the first time, the database is automatically seeded with:
+### 👤 User Features
 
-- Sample genres: Action, Shooter, RPG
-- Sample platforms: PC, PlayStation, Xbox
-- Example publishers and test games
+* Browse all available games
+* Search games by title
+* Filter games by:
+
+  * Genre
+  * Platform
+* View detailed game information
+* Add/remove games from Wishlist
+* Add/remove games from Cart
+* Simulated purchase (clears cart)
+
+---
+
+### 🔐 Authentication & Authorization
+
+* User registration and login
+* Role-based access:
+
+  * **User**
+  * **Admin**
+* Admin users are redirected to Admin Panel after login
+
+---
+
+### 🛠️ Admin Features
+
+* Game Management Panel
+* Create new games
+* Edit existing games
+* Delete games
+
+---
+
+## 🏗️ Architecture
+
+The application follows a modular, multi-project architecture, where each project has a clear responsibility.
+
+### 📂 Project Structure
+
+
+#### 🌐 TechWorld.Web
+
+* ASP.NET Core MVC application
+* Contains:
+  * Controllers
+  * Views (Razor)
+  * Program configuration
+* Handles HTTP requests and UI rendering
+
+---
+
+#### 🧠 TechWorld.Services.Core
+
+* Business logic layer
+* Contains:
+  * Services
+  * Service interfaces
+* Responsible for:
+  * Application logic
+  * Data processing
+  * Communication with repository layer
+
+---
+
+#### 🗄️ TechWorld.Data
+
+* Data access layer
+* Contains:
+  * ApplicationDbContext
+  * Repository implementation
+  * Entity configurations
+  * Migrations
+* Uses Entity Framework Core
+
+---
+
+#### 📦 TechWorld.Data.Models
+
+* Domain models (entities)
+* Contains:
+  * Game
+  * Genre
+  * Platform
+  * Publisher
+  * ApplicationUser (Identity with GUID)
+  * UserGame (Wishlist)
+  * CartProduct (Cart)
+
+---
+
+#### 📑 TechWorld.Web.ViewModels
+
+* View models used for UI
+* Separates domain models from presentation layer
+* Used for:
+  * Data transfer to views
+  * UI-specific shaping of data
+
+---
+
+#### ⚙️ TechWorld.GCommon
+
+* Shared/common components
+* Contains:
+  * Custom exceptions
+  * Constants
+  * Validation helpers
+
+---
+
+#### 🧪 TechWorld.Services.Tests
+
+* Unit tests project
+* Uses:
+  * NUnit
+  * Moq
+* Tests service layer logic independently from database
+
+---
+
+## 🔄 Architectural Principles
+
+* Separation of concerns
+* Dependency injection
+* Service-based business logic
+* Repository abstraction for data access
+
+---
+
+## ✅ Validations
+
+* Duplicate prevention (Wishlist & Cart)
+* Entity existence checks
+* User-based ownership validation
+* Exception handling with user-friendly messages
+
+---
+
+## 🌱 Data Seeding
+
+The application seeds:
+
+* Games
+* Genres
+* Platforms
+* Publishers
+* Roles:
+  * Admin
+  * User
+* Default Admin account:
+  * Email: `admin@techworld.com`
+  * Password: `admin123`
+
+---
+
+## 🛒 Business Logic
+
+### Wishlist
+
+* Per-user wishlist system
+* Users can add/remove games
+* Prevents duplicates
+
+### Cart
+
+* Per-user cart system
+* Prevents duplicate entries
+* Simulated checkout clears cart
+
+---
+
+## 🔍 Search & Filtering
+
+* Search by title (case-insensitive)
+* Filter by Genre and Platform
+* Combined filtering supported
+
+---
+
+## 📄 Pagination
+
+* Games are split into pages
+* Supports filtering + pagination together
+
+---
+
+## 🧪 Unit Testing
+
+Implemented using:
+
+* **NUnit**
+* **Moq**
+
+### ✔ Covered Services:
+
+* CartService
+* WishlistService
+* GameService
+
+### ✔ Tested Scenarios:
+
+* Valid operations
+* Invalid operations (exceptions)
+* Edge cases
+* Data mapping
 
 ---
 
 ## 📸 Screenshots
 
-<img width="1568" height="1230" alt="image" src="https://github.com/user-attachments/assets/68774ac1-7bf9-4f98-8d51-a836bd58f9ec" />
+<img width="1236" height="1102" alt="image" src="https://github.com/user-attachments/assets/89a2ca77-6f23-458d-ae55-fb3133e8590c" />
 <hr>
-<img width="1573" height="1137" alt="image" src="https://github.com/user-attachments/assets/9932a9d8-b960-43c8-8519-7810c49a7789" />
+<img width="1263" height="606" alt="image" src="https://github.com/user-attachments/assets/623f2df1-6628-44c8-95ca-e54594f57ca9" />
 <hr>
-<img width="690" height="1171" alt="image" src="https://github.com/user-attachments/assets/253336b6-ff29-4ea1-b292-ab933dd7f6d4" />
+<img width="1245" height="632" alt="image" src="https://github.com/user-attachments/assets/b0b1accd-0075-4116-ae54-63b6859af750" />
 <hr>
-<img width="1350" height="1188" alt="image" src="https://github.com/user-attachments/assets/d54c4bd9-fb24-44fe-9804-a718ea8d0740" />
+<img width="1663" height="1181" alt="image" src="https://github.com/user-attachments/assets/be31cf51-a6ff-4dfc-8c31-a4c279727b4e" />
 <hr>
-<img width="1318" height="1225" alt="image" src="https://github.com/user-attachments/assets/15a3a12e-fe9e-467c-bd40-29451cc03e11" />
+<img width="1127" height="1202" alt="image" src="https://github.com/user-attachments/assets/5dc923ad-bc4a-4ea3-8483-2aa9b7c75430" />
 <hr>
-<img width="1742" height="795" alt="image" src="https://github.com/user-attachments/assets/a345382d-e831-4f02-9ec9-c624783419c9" />
+<img width="1501" height="722" alt="image" src="https://github.com/user-attachments/assets/f302e136-a262-4b90-a2ce-3446e378fc05" />
+<hr>
+<img width="1493" height="778" alt="image" src="https://github.com/user-attachments/assets/31f71f99-37af-4b96-b9bd-a5e6d91f5991" />
+<hr>
+<img width="1497" height="666" alt="image" src="https://github.com/user-attachments/assets/c165d793-294d-48c5-834a-e9d2620af775" />
+<hr>
+<img width="1517" height="1098" alt="image" src="https://github.com/user-attachments/assets/f55edfc2-0238-499b-887d-a0c07bc6800a" />
+<hr>
+<img width="1253" height="1175" alt="image" src="https://github.com/user-attachments/assets/b82c7267-9642-4502-bb73-a55451a3bd8e" />
+<hr>
+<img width="1240" height="1216" alt="image" src="https://github.com/user-attachments/assets/638ffb44-b34f-4375-a671-cf20ddfcc132" />
+<hr>
+<img width="1710" height="783" alt="image" src="https://github.com/user-attachments/assets/85189386-6b07-4748-9d47-5eb99eb8b52b" />
 
 ---
 
-## 💾 Main Features Summary
+## 🎯 Key Highlights
 
-Feature | Description
---------|-------------
-Home Page | Displays the latest 3 games
-Details Page | Shows full information about a game
-Create / Edit | Allows adding or updating game entries with validation
-Delete | Confirms and removes a game, deleting orphaned publishers automatically
-Validation | Both client-side (Bootstrap + Data Annotations) and server-side checks
-Design | Clean, responsive layout using Bootstrap 5 and Razor syntax
+* Clean architecture and separation of concerns
+* Fully functional admin panel
+* User-specific data (wishlist & cart)
+* Robust error handling
+* Realistic unit testing with Moq
+* Search, filtering, and pagination combined
 
 ---
 
-## 🧑‍💻 Author
+## 👨‍💻 Author
 
-Danail Georgiev
+* Danail Georgiev
