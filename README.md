@@ -1,8 +1,8 @@
-# 🎮 Game Store Web Application
+# 🎮 TechWorld – ASP.NET Core MVC Web Application
 
 ## 📌 Project Overview
 
-Game Store is a full-stack ASP.NET Core MVC web application that allows users to browse, filter, and manage video games, as well as maintain a wishlist and shopping cart.
+TechWorld is a ASP.NET Core MVC web application that allows users to browse, filter, and manage video games, as well as maintain a wishlist and shopping cart.
 
 The application demonstrates clean architecture, role-based access control, and full CRUD functionality, along with unit testing and user interaction features.
 
